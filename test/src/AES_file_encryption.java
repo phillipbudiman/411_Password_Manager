@@ -50,13 +50,13 @@ public class AES_file_encryption {
 		KeyGenerator KeyGen= KeyGenerator.getInstance("AES");
 		SecretKey skey = KeyGen.generateKey();
 		
-		File textFile = new File("textfile.txt");
-		File encryptFile = new File("encrypted-file.txt");
-		File decryptFile = new File("decryptfile.txt");
+		File textFile = new File("og.json");
+		File encryptFile = new File("creds.json");
+		File decryptFile = new File("decrypt.json");
 		
 		encrypt_file(textFile,encryptFile,ivspec,skey );
-		decrypt_file(encryptFile,decryptFile, skey, ivspec);
-		
+		//decrypt_file(encryptFile,decryptFile, skey, ivspec);
+		decrypt_file(encryptFile,decryptFile,skey,ivspec);
 	}
 	//a method for encrypting a file
 	public static void encrypt_file(File input_file,File output_file, IvParameterSpec ivspec, SecretKey skey) 
@@ -69,18 +69,20 @@ public class AES_file_encryption {
 		
 		FileInputStream file_stream = new FileInputStream(input_file);
 		FileOutputStream out_file = new FileOutputStream(output_file);
-		//instead of reading entire file into memory, we break file into buffer, then ecrypt those buffer.
+		//instead of reading entire file into memory, we break file into buffer, then encrypt those buffer.
 		//a byte is 8 bits
 		//byte[1024] means a byte array of 1024 byte
+		
+		
 		byte[] buffer = new byte[1024];  
 		int bytesRead;
 		//read the buffer, if reach -1 then we have reach end of file.
 		//reading file in 1024 byte chunks, 1 chunk at a 
 		while ((bytesRead = file_stream.read(buffer)) != -1 ) {
 			
-			//cryto Cipher object uses 2 method to encrypt data
+			//crypto Cipher object uses 2 method to encrypt data
 			//to encrypt a single chunk of data, simply call doFinal() with the data to encrypt
-			//to ecnrypt multiple blocks of data, call update() for each block of data,
+			//to encrypt multiple blocks of data, call update() for each block of data,
 			//the doFinal() for the final chunk
 			//source: http://tutorials.jenkov.com/java-cryptography/cipher.html
 			
