@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileWriter;
 
-//TEST COMMIT 333333
 
 
 //                                    SOURCES AND REFERENCES USE
@@ -51,13 +50,27 @@ public class AES_file_encryption {
 		KeyGenerator KeyGen= KeyGenerator.getInstance("AES");
 		SecretKey skey = KeyGen.generateKey();
 		
-		File textFile = new File("og.json");
-		File encryptFile = new File("creds.json");
-		File decryptFile = new File("decrypt.json");
+		File mainFile = new File("og.json");
 		
-		encrypt_file(textFile,ivspec,skey );
-		//decrypt_file(encryptFile,decryptFile, skey, ivspec);
-		//decrypt_file(encryptFile,decryptFile,skey,ivspec);
+		
+		File testFile = new File("creds.json");
+		
+		
+		
+		File test1 = new File("textfile.txt");
+		File test2 = new File("encrypted-file.txt");
+		encrypt_file(test1,ivspec,skey);
+		
+		copy_file(test1, test2);
+
+		//decrypt_file(test1,skey,ivspec);
+		
+		decrypt_file(test2,skey,ivspec);
+		
+		
+		//encrypt_file(mainFile,ivspec,skey );
+		//copy_file(mainFile,testFile);
+		//decrypt_file(testFile,skey,ivspec);
 		
 		
 		
@@ -77,6 +90,7 @@ public class AES_file_encryption {
 		int bytesRead;
 		//read the buffer, if reach -1 then we have reach end of file.
 		//reading file in 1024 byte chunks, 1 chunk at a 
+  
 		while ((bytesRead = src.read()) != -1 ) {
 			dest.write(bytesRead);
 		}
@@ -101,11 +115,7 @@ public class AES_file_encryption {
 		
 	
 		File tempFile = new File("tempfile.json");
-		if (tempFile.createNewFile()) {
-			System.out.println("file create success");
-		}else {
-			System.out.println("error");
-		}
+
 		
 		FileOutputStream out_file = new FileOutputStream(tempFile);
 		
@@ -149,7 +159,7 @@ public class AES_file_encryption {
 		
 		
 		//an error message will occur when try to open
-		
+		System.out.println("encryption successful");
 	}
 
 	public static void decrypt_file(File decrypt_file, SecretKey skey, IvParameterSpec iv) throws 
@@ -167,12 +177,7 @@ public class AES_file_encryption {
 		FileInputStream in_file = new FileInputStream(decrypt_file);
 		
 		File tempFile = new File("tempfile.json");
-		if (tempFile.createNewFile()) {
-			System.out.println("file create success");
-		}else {
-			System.out.println("error");
-		}
-		
+
 		FileOutputStream out_file = new FileOutputStream(tempFile);
 		
 		
@@ -201,6 +206,8 @@ public class AES_file_encryption {
 		copy_file(tempFile,decrypt_file);
 		tempFile.delete();
 		
+		
+		System.out.println("decryption successful");
 	}
 
 }
