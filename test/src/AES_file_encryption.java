@@ -49,6 +49,8 @@ public class AES_file_encryption {
 		// in the future, we can also load a key and save a key
 		KeyGenerator KeyGen= KeyGenerator.getInstance("AES");
 		SecretKey skey = KeyGen.generateKey();
+		SecretKey skey2 = KeyGen.generateKey();
+		
 		
 		File mainFile = new File("og.json");
 		
@@ -60,12 +62,8 @@ public class AES_file_encryption {
 		File test1 = new File("textfile.txt");
 		File test2 = new File("encrypted-file.txt");
 		encrypt_file(test1,ivspec,skey);
-		
-		copy_file(test1, test2);
-
-		//decrypt_file(test1,skey,ivspec);
-		
-		decrypt_file(test2,skey,ivspec);
+			
+		decrypt_file(test1,skey2,ivspec);
 		
 		
 		//encrypt_file(mainFile,ivspec,skey );
@@ -163,7 +161,7 @@ public class AES_file_encryption {
 	}
 
 	public static void decrypt_file(File decrypt_file, SecretKey skey, IvParameterSpec iv) throws 
-	IllegalBlockSizeException, BadPaddingException, 
+	IllegalBlockSizeException, 
 	InvalidKeyException, InvalidAlgorithmParameterException,
 	NoSuchAlgorithmException, NoSuchPaddingException, IOException {
 	
@@ -192,8 +190,15 @@ public class AES_file_encryption {
 			out_file.write(output);
 		}
 		
-		byte[] finalBytes = ci.doFinal();
-		out_file.write(finalBytes);
+		try {
+			byte[] finalBytes = ci.doFinal();
+			out_file.write(finalBytes);
+			
+		}catch (BadPaddingException e) {
+			System.out.println("bad key use");
+			return;
+		}
+
 		
 		in_file.close();
 		out_file.close();
