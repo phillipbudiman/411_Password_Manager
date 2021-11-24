@@ -1,6 +1,5 @@
 import java.io.FileReader;
-import java.sql.SQLOutput;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -8,20 +7,49 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class JSON_Reader {
-    public static void main(String[] args) throws Exception{
-        Object obj = new JSONParser().parse(new FileReader("creds.json"));
+
+    private ArrayList credential_arrList;
+
+    public JSON_Reader() {
+    }
+
+    public ArrayList read(String fileName) throws Exception {
+        credential_arrList = new ArrayList();
+        
+        Object obj = new JSONParser().parse(new FileReader(fileName));
 
         JSONObject jso = (JSONObject) obj;
 
-        String website = (String) jso.get("website");
-        System.out.println(website);
+        JSONArray jsonArray = ((JSONArray) jso.get("user_credentials"));
 
-        Map creds = ((Map)jso.get("credentials"));
+        String[] creds;
 
-        Iterator<Map.Entry> itr1 = creds.entrySet().iterator();
-        while (itr1.hasNext()) {
-            Map.Entry pair = itr1.next();
-            System.out.println(pair.getKey() + " : " + pair.getValue());
+        for(int i = 0;i < jsonArray.size(); i++){
+            creds = new String[4];
+            jso = (JSONObject) jsonArray.get(i);
+
+            creds[0] = (String) jso.get("website");
+
+            Map credmap = ((Map)jso.get("credentials"));
+
+            creds[1] = (String) credmap.get("username");
+            creds[2] = (String) credmap.get("password");
+            creds[3] = (String) credmap.get("salt");
+            credential_arrList.add(creds);
+        }
+
+        return credential_arrList;
+    }
+
+    public static void main(String[] args) throws Exception{
+        JSON_Reader jr = new JSON_Reader();
+
+        ArrayList ar = jr.read("creds.json");
+
+        for(int i = 0;i < ar.size();i++){
+            for(int o = 0;o < 4;o++) {
+                System.out.println(((String[]) ar.get(i))[o]);
+            }
         }
     }
 }
