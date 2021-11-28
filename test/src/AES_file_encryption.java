@@ -11,7 +11,8 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
-
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 import java.util.Scanner;
 import java.io.File;
@@ -20,6 +21,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileWriter;
+
+
 
 
 
@@ -39,6 +42,9 @@ public class AES_file_encryption {
 	IOException, IllegalBlockSizeException, BadPaddingException {
 		// TODO Auto-generated method stub
 		
+		
+		//Using AES with mode CBC (Cipher Block Chaining)
+		//generating an IV of 16 bytes, for AES 128 bits encryption blocks
 		byte[] iv = new byte[16];
 		SecureRandom srandom = new SecureRandom();
 		srandom.nextBytes(iv);
@@ -49,27 +55,16 @@ public class AES_file_encryption {
 		// in the future, we can also load a key and save a key
 		KeyGenerator KeyGen= KeyGenerator.getInstance("AES");
 		SecretKey skey = KeyGen.generateKey();
-		SecretKey skey2 = KeyGen.generateKey();
+
 		
 		
+		//Loading the file
 		File mainFile = new File("og.json");
-		
-		
 		File testFile = new File("creds.json");
 		
 		
-		
-		File test1 = new File("textfile.txt");
-		File test2 = new File("encrypted-file.txt");
-		encrypt_file(test1,ivspec,skey);
-			
-		decrypt_file(test1,skey2,ivspec);
-		
-		
-		//encrypt_file(mainFile,ivspec,skey );
-		//copy_file(mainFile,testFile);
-		//decrypt_file(testFile,skey,ivspec);
-		
+		encrypt_file(mainFile,ivspec,skey);
+		decrypt_file(mainFile,skey,ivspec);
 		
 		
 		//line in JSON file
@@ -77,6 +72,17 @@ public class AES_file_encryption {
 	}
 	
 	
+	//method that hashes a user key.
+	public static void getKey(String user_password) {
+		SecureRandom random = new SecureRandom();
+		byte[] salt = new byte[16]; //or 128 bits
+		random.nextBytes(salt);
+		
+		
+		
+		
+		
+	}
 	//helper function, given 2 file, source and destination,
 	//copy content of source into destination
 	private static void copy_file(File source, File destination) throws IOException {
@@ -94,8 +100,8 @@ public class AES_file_encryption {
 		}
 		src.close();
 		dest.close();
-		
 	}
+	
 	
 
 	//a method for encrypting a file
@@ -167,10 +173,6 @@ public class AES_file_encryption {
 	
 		Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		ci.init(Cipher.DECRYPT_MODE,skey,iv);
-		
-		//to decrypt the file, we don't do the reverse of encryption, because once the file is lock
-		//we can't simply open it to decrypt chunk by chunk
-		//instead we just use cipher DECRYPT MODE
 		
 		FileInputStream in_file = new FileInputStream(decrypt_file);
 		
