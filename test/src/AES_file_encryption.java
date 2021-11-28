@@ -3,6 +3,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -13,6 +14,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import java.util.Scanner;
 import java.io.File;
@@ -39,7 +41,7 @@ import java.io.FileWriter;
 public class AES_file_encryption {
 	public static void main(String[] args) throws NoSuchAlgorithmException,
 	InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException, 
-	IOException, IllegalBlockSizeException, BadPaddingException {
+	IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
 		// TODO Auto-generated method stub
 		
 		
@@ -62,24 +64,30 @@ public class AES_file_encryption {
 		File mainFile = new File("og.json");
 		File testFile = new File("creds.json");
 		
-		
-		encrypt_file(mainFile,ivspec,skey);
-		decrypt_file(mainFile,skey,ivspec);
-		
+		byte[] user_key_byte = getKey("gordanRamsey");
+		SecretKey new_s_key = new SecretKeySpec(user_key_byte,"AES");
+		encrypt_file(mainFile,ivspec,new_s_key);
+		decrypt_file(mainFile,new_s_key,ivspec);
 		
 		//line in JSON file
 		//{"website":"guguru.com","credentials":{"username":"usr","password":"tron82","salt":"bdjeklspa"}}
 	}
 	
-	
-	//method that hashes a user key.
-	public static void getKey(String user_password) {
+
+	//method that applies PBKDF2 on a user key.
+	public static byte[] getKey(String user_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		SecureRandom random = new SecureRandom();
 		byte[] salt = new byte[16]; //or 128 bits
 		random.nextBytes(salt);
 		
 		
+		char[] char_us_pass = user_password.toCharArray();  //converts user password to char array
+		PBEKeySpec generate_pass = new PBEKeySpec(char_us_pass,salt, 1000, 128);
+		SecretKeyFactory fac = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); //convert key into specific algo key
 		
+		
+		byte[] finele = fac.generateSecret(generate_pass).getEncoded();
+		return finele;
 		
 		
 	}
