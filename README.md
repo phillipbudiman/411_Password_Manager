@@ -29,15 +29,25 @@ public METHOD Summary
  
  
  **Example of how to use AES_file_encryption class to encrypt a file**
-AES_file_encryption myobj = new AES_file_encryption();          //create AES_file_encryption object
-File mainFile = new File("og.json");                            //get database file
-		
-String master_pass = "password123";                            //example of a master password
-		
-SecretKey key = myobj.getKey(master_pass);                     //turn master password into symmetric key
-IvParameterSpec iv = myobj.getIV();                            //get an IV for encryption and decryption
+AES_file_encryption myobj = new AES_file_encryption();          
+//create AES_file_encryption object
 
-myobj.encrypt_file(mainFile, key,iv);                         //call encryption method
-myobj.decrypt_file(mainFile, key,iv);                         //call decryption method
+File mainFile = new File("og.json");                            
+//get database file
+		
+String master_pass = "password123";                            
+//example of a master password
+		
+SecretKey key = myobj.getKey(master_pass);                     
+//turn master password into symmetric key
+
+IvParameterSpec iv = myobj.getIV();                            
+//get an IV for encryption and decryption
+
+myobj.encrypt_file(mainFile, key,iv);                         
+//call encryption method
+
+myobj.decrypt_file(mainFile, key,iv);                         
+//call decryption method
 		
  
