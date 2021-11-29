@@ -42,32 +42,23 @@ public class AES_file_encryption {
 	public static void main(String[] args) throws NoSuchAlgorithmException,
 	InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException, 
 	IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
-		// TODO Auto-generated method stub
-		
-		
-		//Using AES with mode CBC (Cipher Block Chaining)
-		//generating an IV of 16 bytes, for AES 128 bits encryption blocks
-		byte[] iv = new byte[16];
-		SecureRandom srandom = new SecureRandom();
-		srandom.nextBytes(iv);
-		IvParameterSpec ivspec = new IvParameterSpec(iv);
-		
-
-		// for now, lets just create a simple, random secret key
-		// in the future, we can also load a key and save a key
-		KeyGenerator KeyGen= KeyGenerator.getInstance("AES");
-		SecretKey skey = KeyGen.generateKey();
 
 		
 		
-		//Loading the file
+		//Loading the main database file
 		File mainFile = new File("og.json");
-		File testFile = new File("creds.json");
 		
-		byte[] user_key_byte = getKey("gordanRamsey");
-		SecretKey new_s_key = new SecretKeySpec(user_key_byte,"AES");
-		encrypt_file(mainFile,ivspec,new_s_key);
-		decrypt_file(mainFile,new_s_key,ivspec);
+		
+		//generating test key
+		SecretKey user_key = hashKey("njnjnjnjjnjcsdccs");
+		System.out.println("testing AES_file_encryption");
+		SecretKey false_key = hashKey("kay");
+		
+		
+		
+		IvParameterSpec iv = getIV();
+		encrypt_file(mainFile,user_key,iv);
+		decrypt_file(mainFile,false_key,iv);
 		
 		//line in JSON file
 		//{"website":"guguru.com","credentials":{"username":"usr","password":"tron82","salt":"bdjeklspa"}}
@@ -75,7 +66,7 @@ public class AES_file_encryption {
 	
 
 	//method that applies PBKDF2 on a user key.
-	public static byte[] getKey(String user_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+	public static SecretKey hashKey(String user_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		SecureRandom random = new SecureRandom();
 		byte[] salt = new byte[16]; //or 128 bits
 		random.nextBytes(salt);
@@ -87,9 +78,21 @@ public class AES_file_encryption {
 		
 		
 		byte[] finele = fac.generateSecret(generate_pass).getEncoded();
-		return finele;
+		SecretKey new_s_key = new SecretKeySpec(finele,"AES");
+		
+		return new_s_key;
 		
 		
+	}
+	
+	public static IvParameterSpec getIV() {
+		//Using AES with mode CBC (Cipher Block Chaining)
+		//generating an IV of 16 bytes, for AES 128 bits encryption blocks
+		byte[] iv = new byte[16];
+		SecureRandom srandom = new SecureRandom();
+		srandom.nextBytes(iv);
+		IvParameterSpec ivspec = new IvParameterSpec(iv);
+		return ivspec;
 	}
 	//helper function, given 2 file, source and destination,
 	//copy content of source into destination
@@ -113,13 +116,16 @@ public class AES_file_encryption {
 	
 
 	//a method for encrypting a file
-	public static void encrypt_file(File input_file,IvParameterSpec ivspec, SecretKey skey) 
+	public static void encrypt_file(File input_file, SecretKey skey, IvParameterSpec iv) 
+	
 			throws NoSuchAlgorithmException, NoSuchPaddingException, 
 			InvalidKeyException, InvalidAlgorithmParameterException, 
 			IOException, IllegalBlockSizeException, BadPaddingException
 	{
+		
+
 		Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
-		ci.init(Cipher.ENCRYPT_MODE,skey,ivspec);
+		ci.init(Cipher.ENCRYPT_MODE,skey,iv);
 		
 		
 		
@@ -174,11 +180,14 @@ public class AES_file_encryption {
 		System.out.println("encryption successful");
 	}
 
-	public static void decrypt_file(File decrypt_file, SecretKey skey, IvParameterSpec iv) throws 
+	public static void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws 
 	IllegalBlockSizeException, 
 	InvalidKeyException, InvalidAlgorithmParameterException,
 	NoSuchAlgorithmException, NoSuchPaddingException, IOException {
 	
+		
+		
+		
 		Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		ci.init(Cipher.DECRYPT_MODE,skey,iv);
 		
