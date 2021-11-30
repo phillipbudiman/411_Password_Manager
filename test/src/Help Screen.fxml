@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fffef7;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SceneController">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fffef7;">
+         <top>
+            <Text fill="#3fbcad" strokeType="OUTSIDE" strokeWidth="0.0" text="Help" translateY="36.0" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial" size="36.0" />
+               </font>
+            </Text>
+         </top>
+         <center>
+            <Text fill="#515151" strokeType="OUTSIDE" strokeWidth="0.0" text="rem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit nisi sed sollicitudin pellentesque. Nunc posuere purus rhoncus pulvinar aliquam. Ut aliquet tristique nisl vitae volutpat. Nulla aliquet porttitor venenatis. Donec a dui et dui fringilla consectetur id nec massa. Aliquam erat volutpat. Sed ut dui ut lacus dictum fermentum vel tincidunt neque. Sed sed lacinia lectus. Duis sit amet sodales felis. Duis nunc eros, mattis at dui ac, convallis semper risus. In adipiscing ultrices tellus, in suscipit massa vehicula eu." wrappingWidth="500.0" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Text>
+         </center>
+         <bottom>
+            <Text fill="#3fbcad" strokeType="OUTSIDE" strokeWidth="0.0" text="Kay Nguyen, Phillip Budiman, and Nathaniel Bland" translateY="-36.0" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial" size="12.0" />
+               </font></Text>
+         </bottom>
+      </BorderPane>
+      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#switchToTitlescreen" style="-fx-background-color: #3fbcad;" text="Return" textFill="WHITE" translateX="500.0" translateY="345.0" />
+   </children>
+</AnchorPane>
