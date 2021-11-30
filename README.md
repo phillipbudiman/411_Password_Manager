@@ -41,3 +41,9 @@ myobj.encrypt_file(mainFile, key,iv);                         //call encryption 
 myobj.decrypt_file(mainFile, key,iv);                         //call decryption method
 		
  
+Sources and references use:
+https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/SecretKey.html
+https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/SecretKeyFactory.html
+https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/spec/PBEKeySpec.html
+https://docs.oracle.com/javase/7/docs/api/javax/crypto/spec/SecretKeySpec.html
+https://www.baeldung.com/java-password-hashing
