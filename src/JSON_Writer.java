@@ -39,11 +39,13 @@ public class JSON_Writer
         // Adds JSONObject jso to json_arr
         json_arr.add(jso);
     }
-    //kay's method to write JSON for IvSpec
-    public void addIV(IvParameterSpec current_iv){
-        JSONObject jso = new JSONObject();
-        byte[] byteIV = current_iv.getIV();
-        String stringIV = new String(byteIV);
+    //Initialise a master login for user
+    //create an ecryption object with master password
+    //store master login and password in separate JSON file
+    public void initANDstoreUser(String master_username, String master_password){
+        AES_file_encryption my_encrypt = new AES_file_encryption(master_password);
+
+        String iv = my_encrypt.getStringIv();
 
 
 
