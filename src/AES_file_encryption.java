@@ -29,8 +29,6 @@ import java.io.FileWriter;
 
 
 //                                    SOURCES AND REFERENCES USE
-
-
 //            		https://www.novixys.com/blog/java-aes-example/#:~:text=The%20cor
 //           		e%20java%20libraries%20provide,just%20the%20core%20java%20API.
 
@@ -39,11 +37,10 @@ import java.io.FileWriter;
 //------------------------------------ START OF CODING PROGRAM ----------------------------------------------//
 
 public class AES_file_encryption {
+//-------------------Attributes----------------------------//
 	String password;
 	SecretKey key;
 	IvParameterSpec iv;
-
-
 
 	//constructor
 	public AES_file_encryption(String password)  {
@@ -56,6 +53,8 @@ public class AES_file_encryption {
 		}
 	}
 
+
+	//-------------------METHODS-----------------------//
 	//some GETTERs methods
 	public String getPassword(){
 		return this.password;
@@ -78,17 +77,16 @@ public class AES_file_encryption {
 		}
 	}
 
-
+	/*  main use for internal testing
 	public static void main(String[] args) throws NoSuchAlgorithmException,
 			InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException,
 			IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
-		//line in JSON file
-		//{"website":"guguru.com","credentials":{"username":"usr","password":"tron82","salt":"bdjeklspa"}}
+
 	}
+	*/
 
 
-
-	//method that applies PBKDF2 on a user key.
+	//method that applies PBKDF2 on a user password, returning a crytographic key
 	private static SecretKey hashKey(String user_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		SecureRandom random = new SecureRandom();
 		byte[] salt = new byte[16]; //or 128 bits
@@ -107,7 +105,7 @@ public class AES_file_encryption {
 
 
 	}
-
+	//method use to get Initialization vector for AES-CBC cipher mode
 	private static IvParameterSpec getIV() {
 		//Using AES with mode CBC (Cipher Block Chaining)
 		//generating an IV of 16 bytes, for AES 128 bits encryption blocks
@@ -137,6 +135,7 @@ public class AES_file_encryption {
 		dest.close();
 	}
 
+	//IMPORTANT method that calls the encryption of the file and catches any exception returns
 	public boolean encrypt(File input_file) {
 		try{
 			encrypt_file(input_file,this.key,this.iv);
@@ -147,6 +146,7 @@ public class AES_file_encryption {
 		}
 	}
 
+	//IMPORTANT method that calls the decryption of the file and catches any exception returns
 	public boolean decrypt(File input_file){
 		try{
 			decrypt_file(input_file,this.key,this.iv);
