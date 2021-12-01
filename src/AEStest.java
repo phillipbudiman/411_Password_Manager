@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class AEStest {
 	
@@ -17,10 +18,8 @@ public class AEStest {
 
 
 		//writing into "creds.json" file  - return void
-		J_write.addEntry("www.github.com","username","password123");
-		J_write.export("creds");
-
-		J_write.initANDstoreUser("ka","password123");
+		//J_write.addEntry("www.github.com","username","password123");
+		//J_write.export("creds");
 
 
 
@@ -43,7 +42,15 @@ public class AEStest {
 		}
 		*/
 
+		//testing new implementation of backend--ignore this section below
+		/*current backend problem, encryption, decryption doesn't work when user log out and turn off application
+		because a new crytographickey is derive from the same master password everytime AES_file_encryption class
+		is initialise
+		*/
 
+		//J_write.initANDstoreUser("ka","password123");
+		ArrayList ar = J_read.read("src/master_creds.json");
+		System.out.println(ar.get(0));
 
 	}
 }
