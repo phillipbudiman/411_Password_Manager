@@ -21,7 +21,7 @@ public class AEStest {
 
 		//reading "creds.json" file
 		//J_read.read("creds.json");   // - return ArrayList
-
+/dsdds
 		//call encryption on "creds.json"
 		/*
 		if (my_encrypt.encrypt(myFile)) {
