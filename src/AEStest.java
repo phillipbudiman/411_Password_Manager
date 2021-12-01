@@ -23,9 +23,21 @@ public class AEStest {
 		J_read.read("creds.json");   // - return ArrayList
 
 		//call encryption on "creds.json"
-		//my_encrypt.encrypt(myFile);  //return true if success else false
-		//my_encrypt.decrypt(myFile);  //return true if success else false
-		
-		
+		my_encrypt.encrypt(myFile);  //return true if success else false
+		my_encrypt.decrypt(myFile);  //return true if success else false
+
+
+
+		//Some extra testing below - IGNORE this
+		/*
+		//byte[] current = my_encrypt.getByteIv();
+		//System.out.println(current);
+
+		String str = "[B@30b8a058";
+		my_encrypt.setIV(str.getBytes());
+		System.out.println(my_encrypt.getByteIv());
+		my_encrypt.decrypt(myFile);
+		*/
+
 	}
 }

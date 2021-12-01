@@ -76,6 +76,13 @@ public class AES_file_encryption {
 			return false;
 		}
 	}
+	public byte[] getByteIv (){
+		return this.iv.getIV();
+	}
+	public void setIV(byte[] x){
+		IvParameterSpec new_iv = new IvParameterSpec(x);
+		this.iv = new_iv;
+	}
 
 	/*  main use for internal testing
 	public static void main(String[] args) throws NoSuchAlgorithmException,
