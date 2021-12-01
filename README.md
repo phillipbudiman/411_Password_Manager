@@ -3,11 +3,11 @@
 **CLASS AES_file_encryption**
 
 Instantiate AES_file_encryption object:
-   AES_file_encryption.MY_ENCRYPTION = new AES_file_encryption();
+   AES_file_encryption.MY_ENCRYPTION = new AES_file_encryption("password");
 
 you now have object MY_ENCRYPTION
 
-public METHOD Summary
+METHOD Summary
 1. **hashKey(String user_pass)**
   - return type: SecretKey
   - description: a public method that turns a given master password (in String) into a symmetric encryption/decryption key.
@@ -26,6 +26,14 @@ public METHOD Summary
  4. **decrypt_file(File input_file, SecretKey key, IvParameterSpec iv)**
   - return type :void - but given file will be decrypted back to original form
   - description: if the given key is the same key use for encryption then file is decryption, else a message is print "bad key use".
+
+5. **encrypt(File input_file)
+  - return type: boolean
+  - description: call encrypt_file, passing it the key and IV and catch all exception return by method encrypt_file. Return true if encryption success, else false
+ 
+6. **decrypt(File input_file)
+  - return type: boolean
+  - description: call decrypt_file, passing it the key and IV and catch all exception return by method decrypt_file. Return true if decryption success, else false
  
  
  **Example of how to use AES_file_encryption class to encrypt a file**
