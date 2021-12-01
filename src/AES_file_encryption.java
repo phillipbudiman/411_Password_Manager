@@ -40,7 +40,7 @@ public class AES_file_encryption {
 	SecretKey key;
 	IvParameterSpec iv;
 
-	//constructor
+	//constructor for initializing
 	public AES_file_encryption(String login,String password)  {
 		try {
 			this.login = login;
@@ -76,7 +76,13 @@ public class AES_file_encryption {
 	public IvParameterSpec getIV(){
 		return this.iv;
 	}
-
+	public String getLogin(){
+		return this.login;
+	}
+	public boolean updateLogin(String new_login){
+		this.login = new_login;
+		return true;
+	}
 	//some SETTERs methods
 	public boolean updatePassword(String new_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		this.password = new_password;
@@ -100,6 +106,7 @@ public class AES_file_encryption {
 		IvParameterSpec new_iv = new IvParameterSpec(x);
 		this.iv = new_iv;
 	}
+
 
 	/*  main use for internal testing
 	public static void main(String[] args) throws NoSuchAlgorithmException,
