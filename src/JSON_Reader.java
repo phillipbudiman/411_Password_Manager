@@ -38,7 +38,7 @@ public class JSON_Reader {
         for(int i = 0;i < jsonArray.size(); i++){
 
             // Initialize creds String array
-            creds = new String[4];
+            creds = new String[3];
 
             // Initialize jso variable to JSONObject at current index i
             jso = (JSONObject) jsonArray.get(i);
@@ -53,10 +53,8 @@ public class JSON_Reader {
             // Sets remaining creds indexes as follows
             // creds[1] = Username
             // creds[2] = Password
-            // creds[3] = Salt
             creds[1] = (String) credmap.get("username");
             creds[2] = (String) credmap.get("password");
-            creds[3] = (String) credmap.get("salt");
 
             // Adds creds String arr to credential_arrList
             credential_arrList.add(creds);
@@ -67,14 +65,28 @@ public class JSON_Reader {
     }
 
     public static void main(String[] args) throws Exception{
+        // Creates JSON_Reader object
         JSON_Reader jr = new JSON_Reader();
 
-        ArrayList ar = jr.read("creds.json");
+        // Declares ArrayList variable of name ar and sets value to output of read() function
+        // Note: parameter needs to be path of file relative to root directory. If the file is
+        // in a different folder, then it needs to have that folder name appended before the
+        // file name.
+        //
+        // Example: 'src/creds.json' if the file is in folder src, but if not, just
+        // 'creds.json' if it's in the root path of the repository
+        ArrayList ar = jr.read("src/creds.json");
 
+        // For loop that iterates based on the number of items in the arrayList
         for(int i = 0;i < ar.size();i++){
-            for(int o = 0;o < 4;o++) {
+            // For loop that iterates 3 times--one for each index in the array for each ArrayList index
+            for(int o = 0;o < 3;o++) {
+
+                // Casts output of ar.get() to String[] from Object[] such that we can make the code more
+                // compact and use the [o] operator to access the array indices.
                 System.out.println(((String[]) ar.get(i))[o]);
             }
+            // Newline
             System.out.println();
         }
     }
