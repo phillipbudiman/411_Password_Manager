@@ -46,7 +46,8 @@ public class JSON_Writer
         AES_file_encryption my_encrypt = new AES_file_encryption(master_password);
         String iv = my_encrypt.getStringIv();
 
-        JSONObject jso = new JSONObject;
+        JSONObject jso = new JSONObject();
+
         Map m = new LinkedHashMap(3);
         m.put("login",master_username);
         m.put("iv",iv);
