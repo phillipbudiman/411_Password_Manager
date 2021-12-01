@@ -39,13 +39,16 @@ import java.io.FileWriter;
 //------------------------------------ START OF CODING PROGRAM ----------------------------------------------//
 
 public class AES_file_encryption {
+	String password;
 	SecretKey key;
 	IvParameterSpec iv;
+
 
 
 	//constructor
 	public AES_file_encryption(String password)  {
 		try {
+			this.password = password;
 			this.key = hashKey(password);
 			this.iv = getIV();
 		}catch (NoSuchAlgorithmException | InvalidKeySpecException e){
@@ -53,31 +56,36 @@ public class AES_file_encryption {
 		}
 	}
 
+	//some GETTERs methods
+	public String getPassword(){
+		return this.password;
+	}
+	public SecretKey getKey(){
+		return this.key;
+	}
+	public IvParameterSpec getIv(){
+		return this.iv;
+	}
+
+	//some SETTERs methods
+	public boolean updatePassword(String new_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+		this.password = new_password;
+		try{
+			this.key = hashKey(new_password);
+			return true;
+		}catch  (NoSuchAlgorithmException | InvalidKeySpecException e ){
+			return false;
+		}
+	}
+
 
 	public static void main(String[] args) throws NoSuchAlgorithmException,
 			InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException,
 			IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
-
-
-
-		//Loading the main database file
-		File mainFile = new File("og.json");
-
-
-		//generating test key
-		SecretKey user_key = hashKey("njnjnjnjjnjcsdccs");
-		System.out.println("testing AES_file_encryption");
-		SecretKey false_key = hashKey("kay");
-
-
-
-		IvParameterSpec iv = getIV();
-		encrypt_file(mainFile,user_key,iv);
-		decrypt_file(mainFile,false_key,iv);
-
 		//line in JSON file
 		//{"website":"guguru.com","credentials":{"username":"usr","password":"tron82","salt":"bdjeklspa"}}
 	}
+
 
 
 	//method that applies PBKDF2 on a user key.
@@ -109,6 +117,7 @@ public class AES_file_encryption {
 		IvParameterSpec ivspec = new IvParameterSpec(iv);
 		return ivspec;
 	}
+
 	//helper function, given 2 file, source and destination,
 	//copy content of source into destination
 	private static void copy_file(File source, File destination) throws IOException {
@@ -213,7 +222,7 @@ public class AES_file_encryption {
 
 	}
 
-	public static void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
+	private static void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
 			IllegalBlockSizeException,
 			InvalidKeyException, InvalidAlgorithmParameterException,
 			NoSuchAlgorithmException, NoSuchPaddingException, IOException,
