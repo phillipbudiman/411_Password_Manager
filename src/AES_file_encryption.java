@@ -211,8 +211,6 @@ public class AES_file_encryption {
 		tempFile.delete();//delete temporary file
 
 
-		//an error message will occur when try to open
-		System.out.println("encryption successful");
 	}
 
 	public static void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
@@ -260,8 +258,6 @@ public class AES_file_encryption {
 		copy_file(tempFile,decrypt_file);
 		tempFile.delete();
 
-
-		System.out.println("decryption successful");
 	}
 
 }
