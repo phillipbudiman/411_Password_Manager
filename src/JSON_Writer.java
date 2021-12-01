@@ -43,7 +43,7 @@ public class JSON_Writer
     //create an ecryption object with master password
     //store master login and password in separate JSON file
     public void initANDstoreUser(String master_username, String master_password){
-        AES_file_encryption my_encrypt = new AES_file_encryption(master_password);
+        AES_file_encryption my_encrypt = new AES_file_encryption(master_username,master_password);
         String iv = my_encrypt.getStringIv();
 
         JSONObject jso = new JSONObject();

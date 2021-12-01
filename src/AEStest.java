@@ -8,7 +8,7 @@ public class AEStest {
 
 		File myFile = new File("creds.json");
 		//instantiate encryption class
-		AES_file_encryption my_encrypt = new AES_file_encryption("password123");
+		AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
 
 		//instantiate JSON classes
 		JSON_Reader J_read = new JSON_Reader();

@@ -35,13 +35,15 @@ import java.io.FileWriter;
 
 public class AES_file_encryption {
 //-------------------Attributes----------------------------//
+	String login;
 	String password;
 	SecretKey key;
 	IvParameterSpec iv;
 
 	//constructor
-	public AES_file_encryption(String password)  {
+	public AES_file_encryption(String login,String password)  {
 		try {
+			this.login = login;
 			this.password = password;
 			this.key = hashKey(password);
 			this.iv = createIV();
@@ -50,8 +52,9 @@ public class AES_file_encryption {
 		}
 	}
 
-	public AES_file_encryption(String password, String iv){
+	public AES_file_encryption(String login,String password, String iv){
 		try {
+			this.login  = login;
 			this.password = password;
 			this.key = hashKey(password);
 			IvParameterSpec preset = new IvParameterSpec(iv.getBytes());
