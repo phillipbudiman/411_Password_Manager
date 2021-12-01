@@ -1,4 +1,5 @@
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -47,6 +48,17 @@ public class AES_file_encryption {
 		}catch (NoSuchAlgorithmException | InvalidKeySpecException e){
 			System.out.println("unable to create object");
 		}
+	}
+
+	public AES_file_encryption(String password, String iv){
+		try {
+			this.password = password;
+			this.key = hashKey(password);
+			IvParameterSpec preset = new IvParameterSpec(iv.getBytes());
+		}
+		 catch (NoSuchAlgorithmException | InvalidKeySpecException e){
+			System.out.println("object initialize error");
+		 }
 	}
 
 
