@@ -15,8 +15,8 @@ public class AEStest {
 		JSON_Writer J_write = new JSON_Writer();
 
 		//writing into "creds.json" file  - return void
-		//J_write.addEntry("www.github.com","username","password123");
-		//J_write.export("creds");
+		J_write.addEntry("www.github.com","username","password123");
+		J_write.export("creds");
 
 
 		//reading "creds.json" file
@@ -39,12 +39,13 @@ public class AEStest {
 
 		//Some extra testing below - IGNORE this
 
+		System.out.print(my_encrypt.getKey());
 		byte[] current = my_encrypt.getByteIv();
 
-		System.out.println(current);
+		//System.out.println(current);
 
 		String str = "[B@1d16f93d";
-		my_encrypt.setIV(str.getBytes());
+		//my_encrypt.setIV(str.getBytes());
 		//System.out.println(my_encrypt.getStringIv());
 
 		/*
@@ -53,12 +54,12 @@ public class AEStest {
 		}else {
 			System.out.println("encryption failed");
 		}
-		*/
+
 		if (my_encrypt.decrypt(myFile)) {
 			System.out.println("decryption succesful");
 		}else {
 			System.out.println("decryption failed");
 		}
-
+		*/
 	}
 }
