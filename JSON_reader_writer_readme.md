@@ -1,5 +1,10 @@
 ## README for JSON Reader/Writer
 
+### PLEASE READ:
+You may need to add a missing dependency before you're able to run the JSON_Reader and Writer code. I've uploaded json-simple-1.1.jar to the repo, so please add that as a Library dependency. Instructions on how to do so may differ from IDE to IDE, but I'll be posting the one from IntelliJ since it's pretty clear on what you need to do in general IMO.
+
+![Library Dependency Instructions](lib_dependency_instructions.png)
+
 ### JSON File Attributes for JSON_Reader/Writer
 > {"**credentials**": [{"**website**": "example.com", "**loginfo**"={"**username**": "user", "**password**": "word"}}, ...]
 
