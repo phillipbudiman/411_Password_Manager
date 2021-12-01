@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.SecretKey;
 
 public class JSON_Writer
 {
@@ -46,12 +47,13 @@ public class JSON_Writer
         AES_file_encryption my_encrypt = new AES_file_encryption(master_username,master_password);
 
         byte[] iv = my_encrypt.getByteIv();
-
+        SecretKey key = my_encrypt.getKey();
         JSONObject jso = new JSONObject();
 
         jso.put("m_username",master_username);
         //question: should we store the password given that the login file may not be encrypteed.
         jso.put("iv",iv);
+        jso.put("key",key);
 
         // Sets fileName to {name}.json
         String fileName = "master_creds.json";
