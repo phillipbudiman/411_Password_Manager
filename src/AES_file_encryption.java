@@ -47,7 +47,7 @@ public class AES_file_encryption {
 		try {
 			this.password = password;
 			this.key = hashKey(password);
-			this.iv = getIV();
+			this.iv = createIV();
 		}catch (NoSuchAlgorithmException | InvalidKeySpecException e){
 			System.out.println("unable to create object");
 		}
@@ -62,7 +62,7 @@ public class AES_file_encryption {
 	public SecretKey getKey(){
 		return this.key;
 	}
-	public IvParameterSpec getIv(){
+	public IvParameterSpec getIV(){
 		return this.iv;
 	}
 
@@ -106,7 +106,7 @@ public class AES_file_encryption {
 
 	}
 	//method use to get Initialization vector for AES-CBC cipher mode
-	private static IvParameterSpec getIV() {
+	private static IvParameterSpec createIV() {
 		//Using AES with mode CBC (Cipher Block Chaining)
 		//generating an IV of 16 bytes, for AES 128 bits encryption blocks
 		byte[] iv = new byte[16];
