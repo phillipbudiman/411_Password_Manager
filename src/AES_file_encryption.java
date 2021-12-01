@@ -122,7 +122,8 @@ public class AES_file_encryption {
 	private static SecretKey hashKey(String user_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		SecureRandom random = new SecureRandom();
 		byte[] salt = new byte[16]; //or 128 bits
-		random.nextBytes(salt);
+		salt = "[B@61f8bee4".getBytes();
+		//random.nextBytes(salt);
 
 
 		char[] char_us_pass = user_password.toCharArray();  //converts user password to char array

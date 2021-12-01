@@ -1,4 +1,5 @@
 import java.io.File;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class AEStest {
@@ -9,7 +10,7 @@ public class AEStest {
 
 		File myFile = new File("creds.json");
 		//instantiate encryption class
-
+		AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
 
 
 		//instantiate JSON classes
@@ -50,7 +51,9 @@ public class AEStest {
 
 		//J_write.initANDstoreUser("ka","password123");
 		ArrayList ar = J_read.read("src/master_creds.json");
-		System.out.println(ar.get(0));
+
+
+		System.out.println(my_encrypt.getKey());
 
 	}
 }
