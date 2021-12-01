@@ -41,7 +41,6 @@ public class AEStest {
 
 		System.out.print(my_encrypt.getKey());
 		byte[] current = my_encrypt.getByteIv();
-		//sdsad
 		//System.out.println(current);
 
 		String str = "[B@1d16f93d";
