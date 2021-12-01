@@ -39,6 +39,21 @@ import java.io.FileWriter;
 //------------------------------------ START OF CODING PROGRAM ----------------------------------------------//
 
 public class AES_file_encryption {
+	SecretKey key;
+	IvParameterSpec iv;
+
+
+	//constructor
+	public AES_file_encryption(String password)  {
+		try {
+			this.key = hashKey(password);
+			this.iv = getIV();
+		}catch (NoSuchAlgorithmException | InvalidKeySpecException e){
+			System.out.println("unable to create object");
+		}
+	}
+
+
 	public static void main(String[] args) throws NoSuchAlgorithmException,
 			InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException,
 			IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
@@ -66,7 +81,7 @@ public class AES_file_encryption {
 
 
 	//method that applies PBKDF2 on a user key.
-	public static SecretKey hashKey(String user_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+	private static SecretKey hashKey(String user_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		SecureRandom random = new SecureRandom();
 		byte[] salt = new byte[16]; //or 128 bits
 		random.nextBytes(salt);
@@ -85,7 +100,7 @@ public class AES_file_encryption {
 
 	}
 
-	public static IvParameterSpec getIV() {
+	private static IvParameterSpec getIV() {
 		//Using AES with mode CBC (Cipher Block Chaining)
 		//generating an IV of 16 bytes, for AES 128 bits encryption blocks
 		byte[] iv = new byte[16];
@@ -113,10 +128,30 @@ public class AES_file_encryption {
 		dest.close();
 	}
 
+	public boolean encrypt(File input_file) {
+		try{
+			encrypt_file(input_file,this.key,this.iv);
+			return true;
+		} catch (InvalidAlgorithmParameterException|NoSuchPaddingException |IllegalBlockSizeException|
+				NoSuchAlgorithmException|IOException|BadPaddingException|InvalidKeyException e) {
+			return false;
+		}
+	}
 
-
+	public boolean decrypt(File input_file){
+		try{
+			decrypt_file(input_file,this.key,this.iv);
+			return true;
+		} catch (InvalidAlgorithmParameterException|NoSuchPaddingException |IllegalBlockSizeException|
+				NoSuchAlgorithmException|IOException|InvalidKeyException e) {
+			return false;
+		} catch (BadPaddingException e) {
+			System.out.println("bad key use");
+			return false;
+		}
+	}
 	//a method for encrypting a file
-	public static void encrypt_file(File input_file, SecretKey skey, IvParameterSpec iv)
+	private static void encrypt_file(File input_file, SecretKey skey, IvParameterSpec iv)
 
 			throws NoSuchAlgorithmException, NoSuchPaddingException,
 			InvalidKeyException, InvalidAlgorithmParameterException,
@@ -183,7 +218,8 @@ public class AES_file_encryption {
 	public static void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
 			IllegalBlockSizeException,
 			InvalidKeyException, InvalidAlgorithmParameterException,
-			NoSuchAlgorithmException, NoSuchPaddingException, IOException {
+			NoSuchAlgorithmException, NoSuchPaddingException, IOException,
+			BadPaddingException{
 
 
 
@@ -208,15 +244,9 @@ public class AES_file_encryption {
 			byte[] output = ci.update(buffer,0,bytesRead);
 			out_file.write(output);
 		}
+		byte[] finalBytes = ci.doFinal();
+		out_file.write(finalBytes);
 
-		try {
-			byte[] finalBytes = ci.doFinal();
-			out_file.write(finalBytes);
-
-		}catch (BadPaddingException e) {
-			System.out.println("bad key use");
-			return;
-		}
 
 
 		in_file.close();
