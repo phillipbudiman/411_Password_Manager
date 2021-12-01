@@ -6,7 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-//test commit - kay
+import javax.crypto.spec.IvParameterSpec;
+
 public class JSON_Writer
 {
     // Declares private JSONArray variable called 'json_arr
@@ -37,6 +38,15 @@ public class JSON_Writer
 
         // Adds JSONObject jso to json_arr
         json_arr.add(jso);
+    }
+    //kay's method to write JSON for IvSpec
+    public void addIV(IvParameterSpec current_iv){
+        JSONObject jso = new JSONObject();
+        byte[] byteIV = current_iv.getIV();
+        String stringIV = new String(byteIV);
+
+
+
     }
 
     // addEntry for when a JSONObject is already set up
