@@ -15,7 +15,7 @@ public class AEStest {
 		JSON_Writer J_write = new JSON_Writer();
 
 		//writing into "creds.json" file  - return void
-		J_write.addEntry("www.github.com","username","password123","123");
+		J_write.addEntry("www.github.com","username","password123");
 
 		//reading "creds.json" file
 		J_read.read("creds.json");   // - return ArrayList
