@@ -1,4 +1,7 @@
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -21,47 +24,59 @@ public class JSON_Reader {
         credential_arrList = new ArrayList();
 
         // Initializes JSONParser and parses JSON data from fileName
-        // into variable of type Object
-        Object obj = new JSONParser().parse(new FileReader(fileName));
-
-        // Converts obj to type JSONObject at variable jso
-        JSONObject jso = (JSONObject) obj;
-
-        // Obtains JSONArray located at field "credentials" of JSON
-        JSONArray jsonArray = ((JSONArray) jso.get("credentials"));
-
-        // Declare 'creds' String array to hold the different fields
-        // for each JSON
-        String[] creds;
-
-        // For loop to iterate through all elements in the JSONArray
-        for(int i = 0;i < jsonArray.size(); i++){
-
-            // Initialize creds String array
-            creds = new String[3];
-
-            // Initialize jso variable to JSONObject at current index i
-            jso = (JSONObject) jsonArray.get(i);
-
-            // Gets "website" field and places it in index 0 of creds array
-            creds[0] = (String) jso.get("website");
-
-            // Create a map variable to be able to access the fields within
-            // "credentials"
-            Map credmap = ((Map)jso.get("loginfo"));
-
-            // Sets remaining creds indexes as follows
-            // creds[1] = Username
-            // creds[2] = Password
-            creds[1] = (String) credmap.get("username");
-            creds[2] = (String) credmap.get("password");
-
-            // Adds creds String arr to credential_arrList
-            credential_arrList.add(creds);
+        // into variable of type Object if no ParseException or IOException
+        // is thrown. Otherwise, sets obj to null.
+        Object obj;
+        try {
+            obj = new JSONParser().parse(new FileReader(fileName));
+        } catch (ParseException | IOException e) {
+            System.out.println(e);
+            obj = null;
         }
 
-        // Returns the ArrayList with credentials
-        return credential_arrList;
+        // Converts obj to type JSONObject at variable jso if obj is not null
+        if (obj != null) {
+            JSONObject jso = (JSONObject) obj;
+
+            // Obtains JSONArray located at field "credentials" of JSON
+            JSONArray jsonArray = ((JSONArray) jso.get("credentials"));
+
+            // Declare 'creds' String array to hold the different fields
+            // for each JSON
+            String[] creds;
+
+            // For loop to iterate through all elements in the JSONArray
+            for (int i = 0; i < jsonArray.size(); i++) {
+
+                // Initialize creds String array
+                creds = new String[3];
+
+                // Initialize jso variable to JSONObject at current index i
+                jso = (JSONObject) jsonArray.get(i);
+
+                // Gets "website" field and places it in index 0 of creds array
+                creds[0] = (String) jso.get("website");
+
+                // Create a map variable to be able to access the fields within
+                // "credentials"
+                Map credmap = ((Map) jso.get("loginfo"));
+
+                // Sets remaining creds indexes as follows
+                // creds[1] = Username
+                // creds[2] = Password
+                creds[1] = (String) credmap.get("username");
+                creds[2] = (String) credmap.get("password");
+
+                // Adds creds String arr to credential_arrList
+                credential_arrList.add(creds);
+            }
+
+            // Returns the ArrayList with credentials
+            return credential_arrList;
+        } else {
+            // Else, function returns null
+            return (ArrayList) obj;
+        }
     }
 
     public static void main(String[] args) throws Exception{
