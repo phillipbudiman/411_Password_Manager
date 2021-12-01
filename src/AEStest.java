@@ -1,5 +1,5 @@
 import java.io.File;
-
+import java.util.Scanner;
 public class AEStest {
 	
 	
@@ -15,29 +15,50 @@ public class AEStest {
 		JSON_Writer J_write = new JSON_Writer();
 
 		//writing into "creds.json" file  - return void
-		J_write.addEntry("www.github.com","username","password123");
-		J_write.export("creds");
+		//J_write.addEntry("www.github.com","username","password123");
+		//J_write.export("creds");
 
 
 		//reading "creds.json" file
-		J_read.read("creds.json");   // - return ArrayList
+		//J_read.read("creds.json");   // - return ArrayList
 
 		//call encryption on "creds.json"
-		my_encrypt.encrypt(myFile);  //return true if success else false
-		my_encrypt.decrypt(myFile);  //return true if success else false
-
+		/*
+		if (my_encrypt.encrypt(myFile)) {
+			System.out.println("encryption succesful");
+		}else {
+			System.out.println("encryption failed");
+		}
+		if (my_encrypt.encrypt(myFile)) {
+			System.out.println("decryption succesful");
+		}else {
+			System.out.println("decryption failed");
+		}
+		*/
 
 
 		//Some extra testing below - IGNORE this
-		/*
-		//byte[] current = my_encrypt.getByteIv();
-		//System.out.println(current);
 
-		String str = "[B@30b8a058";
+		byte[] current = my_encrypt.getByteIv();
+
+		System.out.println(current);
+
+		String str = "[B@1d16f93d";
 		my_encrypt.setIV(str.getBytes());
-		System.out.println(my_encrypt.getByteIv());
-		my_encrypt.decrypt(myFile);
+		//System.out.println(my_encrypt.getStringIv());
+
+		/*
+		if (my_encrypt.encrypt(myFile)) {
+			System.out.println("encryption succesful");
+		}else {
+			System.out.println("encryption failed");
+		}
 		*/
+		if (my_encrypt.decrypt(myFile)) {
+			System.out.println("decryption succesful");
+		}else {
+			System.out.println("decryption failed");
+		}
 
 	}
 }

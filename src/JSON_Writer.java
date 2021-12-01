@@ -44,16 +44,15 @@ public class JSON_Writer
     //store master login and password in separate JSON file
     public void initANDstoreUser(String master_username, String master_password){
         AES_file_encryption my_encrypt = new AES_file_encryption(master_username,master_password);
+
         String iv = my_encrypt.getStringIv();
 
         JSONObject jso = new JSONObject();
 
         Map m = new LinkedHashMap(3);
         m.put("login",master_username);
+        //question: should we store the password given that the login file may not be encrypteed.
         m.put("iv",iv);
-
-
-
 
     }
 

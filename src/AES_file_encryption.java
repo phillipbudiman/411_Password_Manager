@@ -58,6 +58,7 @@ public class AES_file_encryption {
 			this.password = password;
 			this.key = hashKey(password);
 			IvParameterSpec preset = new IvParameterSpec(iv.getBytes());
+			this.iv = preset;
 		}
 		 catch (NoSuchAlgorithmException | InvalidKeySpecException e){
 			System.out.println("object initialize error");
