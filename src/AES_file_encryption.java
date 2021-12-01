@@ -24,10 +24,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileWriter;
 
-//test commit 3 - final test commit
-
-
-
 //                                    SOURCES AND REFERENCES USE
 //            		https://www.novixys.com/blog/java-aes-example/#:~:text=The%20cor
 //           		e%20java%20libraries%20provide,just%20the%20core%20java%20API.
@@ -79,6 +75,12 @@ public class AES_file_encryption {
 	public byte[] getByteIv (){
 		return this.iv.getIV();
 	}
+	public String getStringIv(){
+		byte[] x = this.getByteIv();
+		String str_iv = new String(x);
+		return str_iv;
+	}
+
 	public void setIV(byte[] x){
 		IvParameterSpec new_iv = new IvParameterSpec(x);
 		this.iv = new_iv;
