@@ -4,7 +4,7 @@ public class AEStest {
 	
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		File myFile = new File("creds.json");
 		//instantiate encryption class
@@ -14,22 +14,15 @@ public class AEStest {
 		JSON_Reader J_read = new JSON_Reader();
 		JSON_Writer J_write = new JSON_Writer();
 
+		//writing into "creds.json" file  - return void
 		J_write.addEntry("www.github.com","username","password123","123");
 
+		//reading "creds.json" file
+		J_read.read("creds.json");   // - return ArrayList
 
-
-		if (my_encrypt.encrypt(myFile)) {
-			System.out.println("encryption success");
-		}else {
-			System.out.println("encryption fail");
-		}
-
-		if (my_encrypt.decrypt(myFile)) {
-			System.out.println("decryption success");
-		}else {
-			System.out.println("decryption fail");
-		}
-
+		//call encryption on "creds.json"
+		my_encrypt.encrypt(myFile);  //return true if success else false
+		my_encrypt.decrypt(myFile);  //return true if success else false
 		
 		
 	}
