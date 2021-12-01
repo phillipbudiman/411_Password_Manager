@@ -45,15 +45,33 @@ public class JSON_Writer
     public void initANDstoreUser(String master_username, String master_password){
         AES_file_encryption my_encrypt = new AES_file_encryption(master_username,master_password);
 
-        String iv = my_encrypt.getStringIv();
+        byte[] iv = my_encrypt.getByteIv();
 
         JSONObject jso = new JSONObject();
 
-        Map m = new LinkedHashMap(3);
-        m.put("login",master_username);
+        jso.put("m_username",master_username);
         //question: should we store the password given that the login file may not be encrypteed.
-        m.put("iv",iv);
+        jso.put("iv",iv);
 
+        // Sets fileName to {name}.json
+        String fileName = "master_creds.json";
+
+        // Sets up PrintWriter object with fileName designation from fileName variable
+        try {
+            PrintWriter pw = new PrintWriter(fileName);
+
+            // Writes JSON to specified file of name in fileName
+            pw.write(jso.toJSONString());
+
+            // Flushes the PrintWriter object stream
+            pw.flush();
+
+            // Closes PrintWriter object
+            pw.close();
+        } catch (FileNotFoundException fo) {
+            System.out.println("File not found!");
+            return;
+        }
     }
 
     // addEntry for when a JSONObject is already set up
@@ -95,32 +113,36 @@ public class JSON_Writer
 
     public static void main(String[] args) throws FileNotFoundException
     {
-        // Option 1: Call addEntry() with strings in parameters (NO pre-built JSON file in parameter)
+//        // Option 1: Call addEntry() with strings in parameters (NO pre-built JSON file in parameter)
+//        JSON_Writer jw = new JSON_Writer();
+//
+//        jw.addEntry("google.com", "admin", "password123");
+//        jw.addEntry("amazon.com", "appori", "pasawado");
+//
+//        // Option 2: Call addEntry() with pre-built JSON file in parameter
+//        // Creating JSONObject
+//        JSONObject jso = new JSONObject();
+//
+//        // Adding field 'website' and setting value
+//        jso.put("website", "safe.com");
+//
+//        // Creating LinkedHashMap to put login credentials under one field
+//        Map m = new LinkedHashMap(2);
+//        m.put("username", "safer");
+//        m.put("password", "safest");
+//
+//        // Adds credential values stored in m to JSONObject jso
+//        jso.put("loginfo", m);
+//
+//        // Calls addEntry() and pushes the JSON to JSON_Writer's storage
+//        jw.addEntry(jso);
+//
+//        // Exports JSONArray in JSON_Writer to a file of name 'creds.json'
+//        // (.json is added in export(), don't add it to the name parameter)
+//        jw.export("creds");
+
         JSON_Writer jw = new JSON_Writer();
 
-        jw.addEntry("google.com", "admin", "password123");
-        jw.addEntry("amazon.com", "appori", "pasawado");
-
-        // Option 2: Call addEntry() with pre-built JSON file in parameter
-        // Creating JSONObject
-        JSONObject jso = new JSONObject();
-
-        // Adding field 'website' and setting value
-        jso.put("website", "safe.com");
-
-        // Creating LinkedHashMap to put login credentials under one field
-        Map m = new LinkedHashMap(2);
-        m.put("username", "safer");
-        m.put("password", "safest");
-
-        // Adds credential values stored in m to JSONObject jso
-        jso.put("loginfo", m);
-
-        // Calls addEntry() and pushes the JSON to JSON_Writer's storage
-        jw.addEntry(jso);
-
-        // Exports JSONArray in JSON_Writer to a file of name 'creds.json'
-        // (.json is added in export(), don't add it to the name parameter)
-        jw.export("creds");
+        jw.initANDstoreUser("admin", "password1");
     }
 }
