@@ -73,6 +73,26 @@ public class USER {
         return encrypt.updatePassword(new_password);
     }
 
+    public void displayVault() {
+        ArrayList creds_arr;
+        try {
+            creds_arr = j_read.read("creds.json");
+        } catch(Exception e) {
+            System.out.println("File not found!");
+            return;
+        }
+        String[] cur_creds;
+
+        for(int i = 0;i < creds_arr.size();i++){
+            cur_creds = (String[]) creds_arr.get(i);
+            System.out.println("Entry " + i + ":");
+            System.out.println("Website: " + cur_creds[0]);
+            System.out.println("Username: " + cur_creds[1]);
+            System.out.println("Password: " + cur_creds[2]);
+            System.out.println("-------------------------------");
+        }
+    }
+
     public void encrypt_vault(){
         if (encrypt.encrypt(this.vault)){
             System.out.println("encryption sucessful");
