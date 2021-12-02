@@ -92,7 +92,7 @@ public class AES_file_encryption {
 		return true;
 	}
 	//some SETTERs methods
-	public boolean updatePassword(String new_password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+	public boolean updatePassword(String new_password)  {
 		this.password = new_password;
 		try{
 			this.key = hashKey(new_password);

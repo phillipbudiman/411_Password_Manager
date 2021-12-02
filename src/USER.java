@@ -54,16 +54,32 @@ public class USER {
 
         return "testing phase";
     }
-    public void add_database(String website, String web_login, String web_password){
+
+    public void add_vault(String website, String web_login, String web_password){
 
     }
-    public void encrypt_database(){
-        if (encrypt.encrypt(this.vault) ==true){
+    public boolean updateMasterPassword(String new_password){
+        this.master_password = new_password;
+        return encrypt.updatePassword(new_password);
+    }
+
+    public void encrypt_vault(){
+        if (encrypt.encrypt(this.vault)){
             System.out.println("encryption sucessful");
         }else{
             System.out.println("encryption fail");
         }
     }
+    //perform password checking on the frontend side
+    public void decrypt_vault(){
+        if (encrypt.decrypt(this.vault)){
+            System.out.println("decryption sucessful");
+        }else{
+            System.out.println("decryption fail");
+        }
+    }
+
+
 
 
 
