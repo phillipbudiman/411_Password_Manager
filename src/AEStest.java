@@ -40,33 +40,9 @@ public class AEStest {
 		//AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
 		File ivFile = new File("testfile.txt");
 
-		/* fucking hell
-		my_encrypt.encrypt(myFile);
-		System.out.println(my_encrypt.getKey());
-		System.out.println(my_encrypt.getIV());
-		byte[] iv = my_encrypt.getByteIv();
-		FileOutputStream dest = new FileOutputStream(ivFile); //write iv to file
-		dest.write(iv);
-		dest.close();
-		*/
 
 
 
-
-		/*
-		DataInputStream ds = null;
-		byte[] dataread= new byte[16];
-		FileInputStream src = new FileInputStream(ivFile); //read iv from file
-		ds = new DataInputStream(src);
-		ds.readFully(dataread);
-		src.close();
-		ds.close();
-		my_encrypt.updatePassword("password123");
-		my_encrypt.setIV(dataread);
-		System.out.println(my_encrypt.getKey());
-		System.out.println(my_encrypt.getIV());
-		my_encrypt.decrypt(myFile);
-		*/
 
 		USER user = new USER("ka","password123");
 		//user.add_vault("google.com","username1","password1");
