@@ -14,8 +14,6 @@ public class AEStest {
 	public static void main(String[] args) throws Exception {
 
 		File myFile = new File("creds.json");
-		//instantiate encryption class
-		//AES_file_encryption my_encrypt = new AES_file_encryption("ka","password");
 
 
 		//instantiate JSON classes
@@ -64,6 +62,10 @@ public class AEStest {
 		USER new_user = new USER("ka", "password123");
 		new_user.storeUser();    //store login credential into login database
 		//new_user.lookupUser();   not working right now
+		new_user.add_vault("google.com","kayquoc","password");
+
+		//new_user.encrypt_vault();
+		//new_user.decrypt_vault();
 
 
 

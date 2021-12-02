@@ -1,6 +1,7 @@
 import org.json.simple.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class USER {
@@ -19,7 +20,7 @@ public class USER {
         this.encrypt = new AES_file_encryption(login,password);
         this.j_write = new JSON_Writer();
         this.j_read = new JSON_Reader();
-        this.vault = null;
+        this.vault = new File("creds.json");
 
     }
 
@@ -32,6 +33,9 @@ public class USER {
         byte[] iv = encrypt.getByteIv();
         j_write.initANDstoreUser(this.login,iv);
         return true;
+    }
+    private String getFileString(){
+        return "creds";
     }
     //read from login database and find any existing user login/matching password
     public String lookupUser() {
@@ -56,6 +60,13 @@ public class USER {
     }
 
     public void add_vault(String website, String web_login, String web_password){
+        j_write.addEntry(website,web_login,web_password);
+        try {
+            j_write.export(this.getFileString());
+        }catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
 
     }
     public boolean updateMasterPassword(String new_password){
@@ -72,11 +83,19 @@ public class USER {
     }
     //perform password checking on the frontend side
     public void decrypt_vault(){
+        try {
+            j_read.read("master_creds.json");
+            //retrieve the IV from file
+        }catch (Exception e) {
+            System.out.println("can't retrieve IV");
+        }
         if (encrypt.decrypt(this.vault)){
             System.out.println("decryption sucessful");
         }else{
             System.out.println("decryption fail");
         }
+
+
     }
 
 
