@@ -84,7 +84,9 @@ public class JSON_Writer
     public boolean editEntry(String website, int choice, String new_value) {
         for(int i = 0;i < json_arr.size();i++){
             if ( ( (String) ( ((JSONObject)json_arr.get(i)).get("website") )  ).equalsIgnoreCase(website)){
-                if(choice == 1) {
+                if (choice == 0) {
+                    ((JSONObject)json_arr.get(i)).put("website", new_value);
+                } else if(choice == 1) {
                     ((JSONObject)json_arr.get(i)).put("username", new_value);
                 } else if (choice == 2) {
                     ((JSONObject)json_arr.get(i)).put("password", new_value);
@@ -147,6 +149,7 @@ public class JSON_Writer
 
         jw.editEntry("safe.com", 1, "best_user");
         jw.editEntry("safe.com", 2, "best_password");
+        jw.editEntry("safe.com", 0, "unsafe.com");
 
         jw.remove("amazon.com");
 
