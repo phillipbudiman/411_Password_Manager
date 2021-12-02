@@ -25,20 +25,10 @@ public class AEStest {
 		//for (int i =0;i <=3;i++) {
 		//	user.add_vault("google.com", "username1", "password1");
 		//}
-		File file = new File("creds.json");
-		ArrayList ar = user.j_read.read("creds.json");
-		for (int i = 0; i < ar.size(); i++){
-			for (int j = 0; j < ((String[]) ar.get(i)).length ;j++){
-				System.out.println(((String[]) ar.get(i))[j]);
-			}
-			System.out.println();
-		}
 
-
-		//user.updateMasterPassword("newpassword123");
 		//user.encrypt_vault();
 
-		//user.decrypt_vault();
+		user.decrypt_vault();
 
 
 
