@@ -5,7 +5,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-
+import java.util.Arrays;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -17,6 +17,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import java.util.Collections;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -210,13 +211,12 @@ public class AES_file_encryption {
 			IOException, IllegalBlockSizeException, BadPaddingException
 	{
 
-
 		Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		ci.init(Cipher.ENCRYPT_MODE,skey,iv);
 
 
 
-		FileInputStream file_stream = new FileInputStream(input_file);
+		//FileInputStream file_stream = new FileInputStream(input_file);
 
 
 		File tempFile = new File("tempfile.json");
@@ -224,11 +224,33 @@ public class AES_file_encryption {
 
 		FileOutputStream out_file = new FileOutputStream(tempFile);
 
+		//adding dummy block to the front of file
+		SecureRandom srandom = new SecureRandom();
+		byte[] dummy = new byte[16];
+		srandom.nextBytes(dummy);
+
+		File obs = new File("observe.json");
+		FileOutputStream obs2 = new FileOutputStream(obs,true);
+		byte[] entire = new byte[(int) input_file.length()];
+		FileInputStream in2 = new FileInputStream(input_file);
+		in2.read(entire);
+
+		byte[] total = new byte[entire.length+ dummy.length];
+		System.arraycopy(dummy,0,total,0,dummy.length);
+		System.arraycopy(entire,0,total,dummy.length,entire.length);
+		obs2.write(total);
+		in2.close();
+		obs2.close();
+
+		FileInputStream file_stream = new FileInputStream(obs);
+
+
+
 
 		//instead of reading entire file into memory, we break file into buffer, then encrypt those buffer.
 		//a byte is 8 bits
 		//byte[1024] means a byte array of 1024 byte
-		byte[] buffer = new byte[1024];
+		byte[] buffer = new byte[16];
 		int bytesRead;
 		//read the buffer, if reach -1 then we have reach end of file.
 		//reading file in 1024 byte chunks, 1 chunk at a
@@ -263,9 +285,11 @@ public class AES_file_encryption {
 		tempFile.delete();//delete temporary file
 
 
+
+
 	}
 
-	private static void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
+	public void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
 			IllegalBlockSizeException,
 			InvalidKeyException, InvalidAlgorithmParameterException,
 			NoSuchAlgorithmException, NoSuchPaddingException, IOException,
@@ -273,9 +297,10 @@ public class AES_file_encryption {
 
 
 
-
 		Cipher ci = Cipher.getInstance("AES/CBC/PKCS5Padding");
 		ci.init(Cipher.DECRYPT_MODE,skey,iv);
+
+
 
 		FileInputStream in_file = new FileInputStream(decrypt_file);
 
@@ -286,7 +311,7 @@ public class AES_file_encryption {
 
 
 
-		byte[] buffer = new byte[1024];
+		byte[] buffer = new byte[16];
 		int bytesRead;
 		//read the buffer, if reach -1 then we have reach end of file.
 		//reading file in 1024 byte chunks, 1 chunk at a time
@@ -307,8 +332,27 @@ public class AES_file_encryption {
 		FileWriter clear = new FileWriter(decrypt_file);
 		clear.flush();
 		clear.close();
+
+
+		File tempfile2 = new File("tempfile2.json");
+		FileOutputStream out2 = new FileOutputStream(tempfile2);
+		FileInputStream in2 = new FileInputStream(tempFile);
+
+		int file_size = (int)tempFile.length();
+		byte[] buffer2 = new byte[(int) tempFile.length()];
+		byte[] junk = new byte[16];
+
+		in2.read(buffer2);
+		out2.write(buffer2,32,file_size-32);
+
+		out2.close();
+		in2.close();
+
+
+
 		copy_file(tempFile,decrypt_file);
 		tempFile.delete();
+
 
 	}
 

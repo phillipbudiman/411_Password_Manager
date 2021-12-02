@@ -68,6 +68,13 @@ public class AEStest {
 		my_encrypt.decrypt(myFile);
 		*/
 
+		USER user = new USER("ka","password123");
+		//user.add_vault("google.com","username1","password1");
+		//user.encrypt_vault();
+
+		user.decrypt_vault();
+		//user.encrypt.decrypt_file(new File("creds.json"),user.encrypt.getKey(),user.encrypt.getIV());
+
 
 
 	}

@@ -12,8 +12,6 @@ public class USER {
     JSON_Reader j_read;
     File vault;
 
-
-
     public USER(String login, String password){
         this.login = login;
         this.master_password = password;
@@ -33,7 +31,7 @@ public class USER {
         byte[] iv = encrypt.getByteIv();
         j_write.initANDstoreUser(this.login,iv);
 
-        //temporary storage into text file
+        //temporary storage of IV into text file
         try {
             FileOutputStream dest = new FileOutputStream("testfile.txt"); //write iv to file
             dest.write(iv);
@@ -114,7 +112,8 @@ public class USER {
 
     }
     public void decrypt_vault(){
-        readIV();
+
+
         if (encrypt.decrypt(this.vault)){
             System.out.println("decryption sucessful");
         }else{
