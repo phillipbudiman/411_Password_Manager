@@ -82,6 +82,22 @@ public class JSON_Writer
         json_arr.remove(jso);
     }
 
+    public boolean editEntry(String website, int choice, String new_value) {
+        for(int i = 0;i < json_arr.size();i++){
+            if (((String[])json_arr.get(i))[0].equalsIgnoreCase(website)){
+                if(choice == 1) {
+                    ((String[])json_arr.get(i))[1] = new_value;
+                } else if (choice == 2) {
+                    ((String[])json_arr.get(i))[2] = new_value;
+                } else {
+                    return false;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Exports the JSONArray in a single JSONObject under the field "credentials"
     // to a file of name specified in parameter
     public void export(String name) throws FileNotFoundException {
