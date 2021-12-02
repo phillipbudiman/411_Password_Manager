@@ -1,4 +1,9 @@
+import javax.crypto.spec.IvParameterSpec;
+import javax.xml.crypto.Data;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,7 +15,7 @@ public class AEStest {
 
 		File myFile = new File("creds.json");
 		//instantiate encryption class
-		AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
+		AES_file_encryption my_encrypt = new AES_file_encryption("ka","password");
 
 
 		//instantiate JSON classes
@@ -50,10 +55,26 @@ public class AEStest {
 		*/
 
 		//J_write.initANDstoreUser("ka","password123");
-		ArrayList ar = J_read.read("src/master_creds.json");
+		//ArrayList ar = J_read.read("og.json");
+
+		//my_encrypt.encrypt(myFile);
+
+		//byte[] iv = my_encrypt.getByteIv();
+		File ivFile = new File("testfile.txt");
+
+		//FileOutputStream dest = new FileOutputStream(ivFile); //write iv to file
+		//dest.write(iv);
 
 
-		System.out.println(my_encrypt.getKey());
+		DataInputStream ds = null;
+		byte[] dataread= new byte[16];
+		FileInputStream src = new FileInputStream(ivFile); //read iv from file
+		ds = new DataInputStream(src);
+		ds.readFully(dataread);
+
+
+		my_encrypt.setIV(dataread);
+		my_encrypt.decrypt(myFile);
 
 	}
 }

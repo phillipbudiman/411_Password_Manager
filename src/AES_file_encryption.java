@@ -80,6 +80,13 @@ public class AES_file_encryption {
 	public String getLogin(){
 		return this.login;
 	}
+
+	public byte[] getKeyString(){
+		return this.key.getEncoded();
+	}
+
+
+
 	public boolean updateLogin(String new_login){
 		this.login = new_login;
 		return true;
@@ -97,6 +104,7 @@ public class AES_file_encryption {
 	public byte[] getByteIv (){
 		return this.iv.getIV();
 	}
+
 	public String getStringIv(){
 		byte[] x = this.getByteIv();
 		String str_iv = new String(x);
@@ -109,13 +117,14 @@ public class AES_file_encryption {
 	}
 
 
-	/*  main use for internal testing
+	//  main use for internal testing
 	public static void main(String[] args) throws NoSuchAlgorithmException,
 			InvalidKeyException, NoSuchPaddingException, InvalidAlgorithmParameterException,
 			IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+		System.out.println(hashKey("password123"));
 
 	}
-	*/
+
 
 
 	//method that applies PBKDF2 on a user password, returning a crytographic key
@@ -123,6 +132,7 @@ public class AES_file_encryption {
 		SecureRandom random = new SecureRandom();
 		byte[] salt = new byte[16]; //or 128 bits
 		salt = "[B@61f8bee4".getBytes();
+
 		//random.nextBytes(salt);
 
 
