@@ -345,12 +345,14 @@ public class AES_file_encryption {
 
 		int file_size = (int)tempFile.length();
 		int read;
-		byte[] buffer2 = new byte[16];
+		byte[] buffer2 = new byte[file_size-16];
 		byte[] junk = new byte[16];
 		in2.read(junk);
-		while ((read = in2.read(buffer2)) != -1 ){
-			out2.write(buffer2);
-		}
+		in2.read(buffer2);
+		out2.write(buffer2);
+		//while ((read = in2.read(buffer2)) != -1 ){
+			//out2.write(buffer2);
+		//}
 
 
 		out2.close();
