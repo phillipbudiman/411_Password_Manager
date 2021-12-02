@@ -71,15 +71,11 @@ public class JSON_Reader {
                 // Gets "website" field and places it in index 0 of creds array
                 creds[0] = (String) jso.get("website");
 
-                // Create a map variable to be able to access the fields within
-                // "credentials"
-                Map credmap = ((Map) jso.get("loginfo"));
-
                 // Sets remaining creds indexes as follows
                 // creds[1] = Username
                 // creds[2] = Password
-                creds[1] = (String) credmap.get("username");
-                creds[2] = (String) credmap.get("password");
+                creds[1] = (String) jso.get("username");
+                creds[2] = (String) jso.get("password");
 
                 // Adds creds String arr to credential_arrList
                 credential_arrList.add(creds);
@@ -104,12 +100,12 @@ public class JSON_Reader {
         //
         // Example: 'src/creds.json' if the file is in folder src, but if not, just
         // 'creds.json' if it's in the root path of the repository
-        ArrayList ar = jr.read("src/creds.json");
+        ArrayList ar = jr.read("creds.json");
 
         // For loop that iterates based on the number of items in the arrayList
         for(int i = 0;i < ar.size();i++){
             // For loop that iterates 3 times--one for each index in the array for each ArrayList index
-            for(int o = 0;o < 2;o++) {
+            for(int o = 0;o < 3;o++) {
 
                 // Casts output of ar.get() to String[] from Object[] such that we can make the code more
                 // compact and use the [o] operator to access the array indices.

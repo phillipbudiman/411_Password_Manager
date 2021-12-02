@@ -29,13 +29,8 @@ public class JSON_Writer
         // Add website field and value from parameter
         jso.put("website", website);
 
-        // Create a LinkedHashMap such that we can add the login credentials in one field.
-        Map m = new LinkedHashMap(3);
-        m.put("username", username);
-        m.put("password", password);
-
-        // Adds login credentials stored in m to JSONObject jso
-        jso.put("loginfo", m);
+        jso.put("username", username);
+        jso.put("password", password);
 
         // Adds JSONObject jso to json_arr
         json_arr.add(jso);
@@ -80,7 +75,7 @@ public class JSON_Writer
     // remove JSONObject from json_arr
     public void remove(String website) {
         for(int i = 0;i < json_arr.size();i++) {
-            if (((String[]) json_arr.get(i))[0].equalsIgnoreCase(website)) {
+            if ( ( (String) ( ((JSONObject)json_arr.get(i)).get("website") )  ).equalsIgnoreCase(website)) {
                 json_arr.remove(json_arr.get(i));
             }
         }
@@ -88,11 +83,11 @@ public class JSON_Writer
 
     public boolean editEntry(String website, int choice, String new_value) {
         for(int i = 0;i < json_arr.size();i++){
-            if (((String[])json_arr.get(i))[0].equalsIgnoreCase(website)){
+            if ( ( (String) ( ((JSONObject)json_arr.get(i)).get("website") )  ).equalsIgnoreCase(website)){
                 if(choice == 1) {
-                    ((String[])json_arr.get(i))[1] = new_value;
+                    ((JSONObject)json_arr.get(i)).put("username", new_value);
                 } else if (choice == 2) {
-                    ((String[])json_arr.get(i))[2] = new_value;
+                    ((JSONObject)json_arr.get(i)).put("password", new_value);
                 } else {
                     return false;
                 }
@@ -130,36 +125,33 @@ public class JSON_Writer
 
     public static void main(String[] args) throws FileNotFoundException
     {
-//        // Option 1: Call addEntry() with strings in parameters (NO pre-built JSON file in parameter)
-//        JSON_Writer jw = new JSON_Writer();
-//
-//        jw.addEntry("google.com", "admin", "password123");
-//        jw.addEntry("amazon.com", "appori", "pasawado");
-//
-//        // Option 2: Call addEntry() with pre-built JSON file in parameter
-//        // Creating JSONObject
-//        JSONObject jso = new JSONObject();
-//
-//        // Adding field 'website' and setting value
-//        jso.put("website", "safe.com");
-//
-//        // Creating LinkedHashMap to put login credentials under one field
-//        Map m = new LinkedHashMap(2);
-//        m.put("username", "safer");
-//        m.put("password", "safest");
-//
-//        // Adds credential values stored in m to JSONObject jso
-//        jso.put("loginfo", m);
-//
-//        // Calls addEntry() and pushes the JSON to JSON_Writer's storage
-//        jw.addEntry(jso);
-//
-//        // Exports JSONArray in JSON_Writer to a file of name 'creds.json'
-//        // (.json is added in export(), don't add it to the name parameter)
-//        jw.export("creds");
-
+        // Option 1: Call addEntry() with strings in parameters (NO pre-built JSON file in parameter)
         JSON_Writer jw = new JSON_Writer();
 
-        //jw.initANDstoreUser("admin", );
+        jw.addEntry("google.com", "admin", "password123");
+        jw.addEntry("amazon.com", "appori", "pasawado");
+
+        // Option 2: Call addEntry() with pre-built JSON file in parameter
+        // Creating JSONObject
+        JSONObject jso = new JSONObject();
+
+        // Adding field 'website' and setting value
+        jso.put("website", "safe.com");
+
+        // Creating LinkedHashMap to put login credentials under one field
+        jso.put("username", "safer");
+        jso.put("password", "safest");
+
+        // Calls addEntry() and pushes the JSON to JSON_Writer's storage
+        jw.addEntry(jso);
+
+        jw.editEntry("safe.com", 1, "best_user");
+        jw.editEntry("safe.com", 2, "best_password");
+
+        jw.remove("amazon.com");
+
+        // Exports JSONArray in JSON_Writer to a file of name 'creds.json'
+        // (.json is added in export(), don't add it to the name parameter)
+        jw.export("creds");
     }
 }
