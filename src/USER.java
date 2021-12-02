@@ -34,8 +34,8 @@ public class USER {
         return true;
     }
     //display login_databse
-    public String readUser(){
-        return j_read.readMaster("master_creds.json");;
+    public void readUser(){
+        System.out.println(j_read.readMaster("master_creds.json"));;
     }
 
     private String getFileString(){
