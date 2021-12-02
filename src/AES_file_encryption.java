@@ -294,7 +294,7 @@ public class AES_file_encryption {
 
 	}
 
-	public void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
+	private void decrypt_file(File decrypt_file, SecretKey skey,IvParameterSpec iv) throws
 			IllegalBlockSizeException,
 			InvalidKeyException, InvalidAlgorithmParameterException,
 			NoSuchAlgorithmException, NoSuchPaddingException, IOException,
