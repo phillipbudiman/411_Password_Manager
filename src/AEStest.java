@@ -38,7 +38,7 @@ public class AEStest {
 		//File myFile = new File("creds.json");
 
 		//AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
-		File ivFile = new File("testfile.txt");
+
 
 
 
