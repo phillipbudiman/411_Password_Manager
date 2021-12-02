@@ -225,10 +225,13 @@ public class AES_file_encryption {
 		FileOutputStream out_file = new FileOutputStream(tempFile);
 
 		//adding dummy block to the front of file
+
+		//creating a dummy cipher block
 		SecureRandom srandom = new SecureRandom();
 		byte[] dummy = new byte[16];
 		srandom.nextBytes(dummy);
 
+		//adding dummy block to front of file
 		File obs = new File("observe.json");
 		FileOutputStream obs2 = new FileOutputStream(obs);
 
