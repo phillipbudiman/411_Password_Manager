@@ -27,7 +27,14 @@ public class AEStest {
 		//}
 		File file = new File("creds.json");
 		ArrayList ar = user.j_read.read("creds.json");
-		for ()
+		for (int i = 0; i < ar.size(); i++){
+			for (int j = 0; j < ((String[]) ar.get(i)).length ;j++){
+				System.out.println(((String[]) ar.get(i))[j]);
+			}
+			System.out.println();
+		}
+
+
 		//user.updateMasterPassword("newpassword123");
 		//user.encrypt_vault();
 
