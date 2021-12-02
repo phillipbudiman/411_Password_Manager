@@ -230,7 +230,8 @@ public class AES_file_encryption {
 		srandom.nextBytes(dummy);
 
 		File obs = new File("observe.json");
-		FileOutputStream obs2 = new FileOutputStream(obs,true);
+		FileOutputStream obs2 = new FileOutputStream(obs);
+
 		byte[] entire = new byte[(int) input_file.length()];
 		FileInputStream in2 = new FileInputStream(input_file);
 		in2.read(entire);
@@ -250,7 +251,7 @@ public class AES_file_encryption {
 		//instead of reading entire file into memory, we break file into buffer, then encrypt those buffer.
 		//a byte is 8 bits
 		//byte[1024] means a byte array of 1024 byte
-		byte[] buffer = new byte[16];
+		byte[] buffer = new byte[1024];
 		int bytesRead;
 		//read the buffer, if reach -1 then we have reach end of file.
 		//reading file in 1024 byte chunks, 1 chunk at a
@@ -271,6 +272,7 @@ public class AES_file_encryption {
 
 		file_stream.close();
 		out_file.close();
+		obs.delete();
 		//process of encryption is now complete
 
 
@@ -311,7 +313,7 @@ public class AES_file_encryption {
 
 
 
-		byte[] buffer = new byte[16];
+		byte[] buffer = new byte[1024];
 		int bytesRead;
 		//read the buffer, if reach -1 then we have reach end of file.
 		//reading file in 1024 byte chunks, 1 chunk at a time
@@ -334,23 +336,26 @@ public class AES_file_encryption {
 		clear.close();
 
 
-		File tempfile2 = new File("tempfile2.json");
-		FileOutputStream out2 = new FileOutputStream(tempfile2);
+
+		FileOutputStream out2 = new FileOutputStream(decrypt_file);
 		FileInputStream in2 = new FileInputStream(tempFile);
 
 		int file_size = (int)tempFile.length();
-		byte[] buffer2 = new byte[(int) tempFile.length()];
+		int read;
+		byte[] buffer2 = new byte[16];
 		byte[] junk = new byte[16];
+		in2.read(junk);
+		while ((read = in2.read(buffer2)) != -1 ){
+			out2.write(buffer2);
+		}
 
-		in2.read(buffer2);
-		out2.write(buffer2,32,file_size-32);
 
 		out2.close();
 		in2.close();
 
 
 
-		copy_file(tempFile,decrypt_file);
+		//copy_file(tempFile,decrypt_file);
 		tempFile.delete();
 
 
