@@ -43,13 +43,12 @@ public class JSON_Writer
     //Initialise a master login for user
     //create an ecryption object with master password
     //store master login and password in separate JSON file
-    public void initANDstoreUser(String master_username, byte[] iv){
+    public void initANDstoreUser(String master_username){
 
         JSONObject jso = new JSONObject();
 
         jso.put("m_username",master_username);
         //question: should we store the password given that the login file may not be encrypteed.
-        jso.put("iv",iv);
 
         // Sets fileName to {name}.json
         String fileName = "master_creds.json";
