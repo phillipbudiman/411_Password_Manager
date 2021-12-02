@@ -1,5 +1,6 @@
 import org.json.simple.JSONObject;
 
+import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -91,22 +92,29 @@ public class USER {
         }
     }
     //perform password checking on the frontend side
-    public void decrypt_vault(){
+    public IvParameterSpec readIV(){
         try {
             //j_read.read("master_creds.json");   not working for now
             //retrieve the IV from file
 
-            DataInputStream ds = null;
+            DataInputStream ds;
             byte[] dataread= new byte[16];
             FileInputStream src = new FileInputStream("testfile.txt"); //read iv from file
             ds = new DataInputStream(src);
             ds.readFully(dataread);   //read IV in terms of byte and store it in dataread
             this.encrypt.setIV(dataread);
+
             ds.close();
             src.close();
+            return encrypt.getIV();
         }catch (Exception e) {
             System.out.println("can't retrieve IV");
+            return encrypt.getIV();
         }
+
+    }
+    public void decrypt_vault(){
+        readIV();
         if (encrypt.decrypt(this.vault)){
             System.out.println("decryption sucessful");
         }else{

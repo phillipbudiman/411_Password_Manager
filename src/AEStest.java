@@ -35,19 +35,24 @@ public class AEStest {
 
 		//J_write.initANDstoreUser("ka","password123");
 		//ArrayList ar = J_read.read("og.json");
-		File myFile = new File("creds.json");
-		AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
+		//File myFile = new File("creds.json");
+
+		//AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
 		File ivFile = new File("testfile.txt");
-		/*
+
+		/* fucking hell
 		my_encrypt.encrypt(myFile);
 		System.out.println(my_encrypt.getKey());
 		System.out.println(my_encrypt.getIV());
 		byte[] iv = my_encrypt.getByteIv();
-
 		FileOutputStream dest = new FileOutputStream(ivFile); //write iv to file
 		dest.write(iv);
 		dest.close();
 		*/
+
+
+
+
 		/*
 		DataInputStream ds = null;
 		byte[] dataread= new byte[16];
@@ -62,16 +67,6 @@ public class AEStest {
 		System.out.println(my_encrypt.getIV());
 		my_encrypt.decrypt(myFile);
 		*/
-
-
-		USER new_user = new USER("ka", "password123");
-		System.out.println(new_user.encrypt.getKey());
-		new_user.storeUser();    //store login credential into login database
-		new_user.lookupUser();   //not working right now
-		new_user.add_vault("google.com","kayquoc","password");
-
-		new_user.encrypt_vault();
-		new_user.decrypt_vault();
 
 
 
