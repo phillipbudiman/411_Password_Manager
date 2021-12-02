@@ -30,14 +30,13 @@ public class USER {
     public boolean storeUser() {
         byte[] iv = encrypt.getByteIv();
         j_write.initANDstoreUser(this.login,iv);
-
-
         return true;
     }
     private String getFileString(){
         return "creds";
     }
     //read from login database and find any existing user login/matching password
+
     public String lookupUser() {
         ArrayList ar = null;
         try {

@@ -13,45 +13,25 @@ public class AEStest {
 	
 	public static void main(String[] args) throws Exception {
 
-
-		//instantiate JSON classes
-		//JSON_Reader J_read = new JSON_Reader();
-		//JSON_Writer J_write = new JSON_Writer();
-
-		//writing into "creds.json" file  - return void
-		//J_write.addEntry("www.github.com","username","password123");
-		//J_write.export("creds");
-
-		//reading "creds.json" file
-		//J_read.read("creds.json");   // - return ArrayList
-
-
-
 		//testing new implementation of backend--ignore this section below
 		/*current backend problem, encryption, decryption doesn't work when user log out and turn off application
 		because a new crytographickey is derive from the same master password everytime AES_file_encryption class
-		is initialise
-		*/
-
-		//J_write.initANDstoreUser("ka","password123");
-		//ArrayList ar = J_read.read("og.json");
-		//File myFile = new File("creds.json");
-
-		//AES_file_encryption my_encrypt = new AES_file_encryption("ka","password123");
+		is initialise */
 
 
+		USER user = new USER("ka", "password123");
+		user.storeUser();
 
+		for (int i =0;i <=3;i++) {
+			user.add_vault("google.com", "username1", "password1");
+		}
 
-
-
-		USER user = new USER("ka","password123");
-		//user.add_vault("google.com","username1","password1");
-		//user.encrypt_vault();
+		user.encrypt_vault();
 
 		user.decrypt_vault();
-		//user.encrypt.decrypt_file(new File("creds.json"),user.encrypt.getKey(),user.encrypt.getIV());
 
 
 
 	}
+
 }
