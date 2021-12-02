@@ -15,38 +15,21 @@ public class AEStest {
 
 		File myFile = new File("creds.json");
 		//instantiate encryption class
-		AES_file_encryption my_encrypt = new AES_file_encryption("ka","password");
+		//AES_file_encryption my_encrypt = new AES_file_encryption("ka","password");
 
 
 		//instantiate JSON classes
-		JSON_Reader J_read = new JSON_Reader();
-		JSON_Writer J_write = new JSON_Writer();
-
+		//JSON_Reader J_read = new JSON_Reader();
+		//JSON_Writer J_write = new JSON_Writer();
 
 		//writing into "creds.json" file  - return void
 		//J_write.addEntry("www.github.com","username","password123");
 		//J_write.export("creds");
 
-
-
 		//reading "creds.json" file
 		//J_read.read("creds.json");   // - return ArrayList
 
 
-
-		//call encryption on "creds.json"
-		/*
-		if (my_encrypt.encrypt(myFile)) {
-			System.out.println("encryption succesful");
-		}else {
-			System.out.println("encryption failed");
-		}
-		if (my_encrypt.encrypt(myFile)) {
-			System.out.println("decryption succesful");
-		}else {
-			System.out.println("decryption failed");
-		}
-		*/
 
 		//testing new implementation of backend--ignore this section below
 		/*current backend problem, encryption, decryption doesn't work when user log out and turn off application
@@ -60,12 +43,12 @@ public class AEStest {
 		//my_encrypt.encrypt(myFile);
 
 		//byte[] iv = my_encrypt.getByteIv();
-		File ivFile = new File("testfile.txt");
+		//File ivFile = new File("testfile.txt");
 
 		//FileOutputStream dest = new FileOutputStream(ivFile); //write iv to file
 		//dest.write(iv);
 
-
+		/*
 		DataInputStream ds = null;
 		byte[] dataread= new byte[16];
 		FileInputStream src = new FileInputStream(ivFile); //read iv from file
@@ -75,6 +58,14 @@ public class AEStest {
 
 		my_encrypt.setIV(dataread);
 		my_encrypt.decrypt(myFile);
+
+		 */
+
+		USER new_user = new USER("ka", "password123");
+		new_user.storeUser();    //store login credential into login database
+		//new_user.lookupUser();   not working right now
+
+
 
 	}
 }

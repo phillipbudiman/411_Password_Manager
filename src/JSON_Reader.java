@@ -95,7 +95,7 @@ public class JSON_Reader {
         // For loop that iterates based on the number of items in the arrayList
         for(int i = 0;i < ar.size();i++){
             // For loop that iterates 3 times--one for each index in the array for each ArrayList index
-            for(int o = 0;o < 3;o++) {
+            for(int o = 0;o < 2;o++) {
 
                 // Casts output of ar.get() to String[] from Object[] such that we can make the code more
                 // compact and use the [o] operator to access the array indices.
