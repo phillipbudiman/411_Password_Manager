@@ -1,7 +1,6 @@
 import org.json.simple.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class USER {
@@ -29,9 +28,18 @@ public class USER {
         this.j_read = new JSON_Reader();
     }
     //store login and master password into a file
-    public boolean storeUser(){
+    public boolean storeUser() {
         byte[] iv = encrypt.getByteIv();
         j_write.initANDstoreUser(this.login,iv);
+
+        //temporary storage into text file
+        try {
+            FileOutputStream dest = new FileOutputStream("testfile.txt"); //write iv to file
+            dest.write(iv);
+        }catch ( IOException e){
+            System.out.println("file not found");
+        }
+
         return true;
     }
     private String getFileString(){
@@ -84,8 +92,16 @@ public class USER {
     //perform password checking on the frontend side
     public void decrypt_vault(){
         try {
-            j_read.read("master_creds.json");
+            //j_read.read("master_creds.json");   not working for now
             //retrieve the IV from file
+
+            DataInputStream ds = null;
+            byte[] dataread= new byte[16];
+            FileInputStream src = new FileInputStream("testfile.txt"); //read iv from file
+            ds = new DataInputStream(src);
+            ds.readFully(dataread);   //read IV in terms of byte and store it in dataread
+            this.encrypt.setIV(dataread);
+
         }catch (Exception e) {
             System.out.println("can't retrieve IV");
         }
