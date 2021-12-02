@@ -41,28 +41,6 @@ public class USER {
     private String getFileString(){
         return "creds";
     }
-    //read from login database and find any existing user login/matching password
-
-    public String lookupUser() {
-        ArrayList ar = null;
-        try {
-            ar = j_read.read("master_creds.json");
-        } catch (Exception e) {
-            System.out.println("file not found");
-        }
-
-        for (int i = 0; i < ar.size(); i++) {
-            // For loop that iterates 3 times--one for each index in the array for each ArrayList index
-            for (int j = 0;j < 2;j++){
-                //String[] x = ar.get(i);
-
-            }
-            // Newline
-            System.out.println();
-        }
-
-        return "testing phase";
-    }
 
     public void add_vault(String website, String web_login, String web_password){
         j_write.addEntry(website,web_login,web_password);
