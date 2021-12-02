@@ -26,10 +26,15 @@ public class USER {
         this.j_write = new JSON_Writer();
         this.j_read = new JSON_Reader();
     }
+
     //store login and master password into a file
     public boolean storeUser() {
         byte[] iv = encrypt.getByteIv();
-        j_write.initANDstoreUser(this.login,iv);
+        j_write.initANDstoreUser(this.login);
+        return true;
+    }
+    //display login_databse
+    public boolean readUser(){
         return true;
     }
     private String getFileString(){
@@ -65,8 +70,6 @@ public class USER {
         }catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
-
-
     }
     public boolean updateMasterPassword(String new_password){
         this.master_password = new_password;
@@ -103,8 +106,6 @@ public class USER {
     //perform password checking on the frontend side
 
     public void decrypt_vault(){
-
-
         if (encrypt.decrypt(this.vault)){
             System.out.println("decryption sucessful");
         }else{
