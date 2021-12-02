@@ -18,6 +18,20 @@ public class JSON_Reader {
     public JSON_Reader() {
     }
 
+    public String readMaster(String fileName) {
+        Object obj;
+        try {
+            obj = new JSONParser().parse(new FileReader(fileName));
+        } catch (ParseException | IOException e) {
+            System.out.println(e);
+            return null;
+        }
+
+        JSONObject jso = (JSONObject) obj;
+
+        return (String) jso.get("m_username");
+    }
+
     public ArrayList read(String fileName) throws Exception {
 
         // Initialize ArrayList to hold exported JSON credentials

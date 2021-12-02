@@ -34,9 +34,10 @@ public class USER {
         return true;
     }
     //display login_databse
-    public boolean readUser(){
-        return true;
+    public String readUser(){
+        return j_read.readMaster("master_creds.json");;
     }
+
     private String getFileString(){
         return "creds";
     }
