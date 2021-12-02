@@ -22,14 +22,15 @@ public class AEStest {
 		USER user = new USER("ka", "password123");
 		user.storeUser();
 
-		for (int i =0;i <=3;i++) {
-			user.add_vault("google.com", "username1", "password1");
-		}
-
-		user.encrypt_vault();
+		//for (int i =0;i <=3;i++) {
+			//user.add_vault("google.com", "username1", "password1");
+		//}
+		File file = new File("creds.json");
+		//System.out.println("File length before encrypt = "+ file.length());
+		//user.encrypt_vault();
 
 		user.decrypt_vault();
-
+		System.out.println("File length afterencrypt = "+ file.length());
 
 
 	}
