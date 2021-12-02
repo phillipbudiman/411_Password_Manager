@@ -48,7 +48,7 @@ public class AEStest {
 		dest.write(iv);
 		dest.close();
 		*/
-
+		/*
 		DataInputStream ds = null;
 		byte[] dataread= new byte[16];
 		FileInputStream src = new FileInputStream(ivFile); //read iv from file
@@ -61,17 +61,17 @@ public class AEStest {
 		System.out.println(my_encrypt.getKey());
 		System.out.println(my_encrypt.getIV());
 		my_encrypt.decrypt(myFile);
+		*/
 
 
+		USER new_user = new USER("ka", "password123");
+		System.out.println(new_user.encrypt.getKey());
+		new_user.storeUser();    //store login credential into login database
+		new_user.lookupUser();   //not working right now
+		new_user.add_vault("google.com","kayquoc","password");
 
-		//USER new_user = new USER("ka", "password123");
-		//System.out.println(new_user.encrypt.getKey());
-		//new_user.storeUser();    //store login credential into login database
-		//new_user.lookupUser();   not working right now
-		//new_user.add_vault("google.com","kayquoc","password");
-
-		//new_user.encrypt_vault();
-		//new_user.decrypt_vault();
+		new_user.encrypt_vault();
+		new_user.decrypt_vault();
 
 
 
