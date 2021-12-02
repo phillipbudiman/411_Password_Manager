@@ -78,8 +78,12 @@ public class JSON_Writer
     }
 
     // remove JSONObject from json_arr
-    public void remove(JSONObject jso) {
-        json_arr.remove(jso);
+    public void remove(String website) {
+        for(int i = 0;i < json_arr.size();i++) {
+            if (((String[]) json_arr.get(i))[0].equalsIgnoreCase(website)) {
+                json_arr.remove(json_arr.get(i));
+            }
+        }
     }
 
     public boolean editEntry(String website, int choice, String new_value) {
