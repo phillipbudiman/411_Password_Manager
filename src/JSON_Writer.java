@@ -43,17 +43,13 @@ public class JSON_Writer
     //Initialise a master login for user
     //create an ecryption object with master password
     //store master login and password in separate JSON file
-    public void initANDstoreUser(String master_username, String master_password){
-        AES_file_encryption my_encrypt = new AES_file_encryption(master_username,master_password);
+    public void initANDstoreUser(String master_username, byte[] iv){
 
-        byte[] iv = my_encrypt.getByteIv();
-        SecretKey key = my_encrypt.getKey();
         JSONObject jso = new JSONObject();
 
         jso.put("m_username",master_username);
         //question: should we store the password given that the login file may not be encrypteed.
         jso.put("iv",iv);
-        jso.put("key",key);
 
         // Sets fileName to {name}.json
         String fileName = "master_creds.json";
@@ -145,6 +141,6 @@ public class JSON_Writer
 
         JSON_Writer jw = new JSON_Writer();
 
-        jw.initANDstoreUser("admin", "password1");
+        //jw.initANDstoreUser("admin", );
     }
 }
