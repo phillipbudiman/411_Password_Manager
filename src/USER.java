@@ -4,7 +4,7 @@ import javax.crypto.spec.IvParameterSpec;
 import java.io.*;
 import java.util.ArrayList;
 
-public class USER {
+public class User {
     String master_password;
     String login;
     AES_file_encryption encrypt;
@@ -12,7 +12,7 @@ public class USER {
     JSON_Reader j_read;
     File vault;
 
-    public USER(String login, String password){
+    public User(String login, String password){
         this.login = login;
         this.master_password = password;
         this.encrypt = new AES_file_encryption(login,password);
@@ -22,7 +22,14 @@ public class USER {
 
     }
 
-    public USER(){
+    public String getLogin(){
+        return login;
+    }
+    public String getPassword(){
+        return master_password;
+    }
+
+    public User(){
         this.j_write = new JSON_Writer();
         this.j_read = new JSON_Reader();
     }
@@ -56,6 +63,7 @@ public class USER {
     }
 
     public void displayVault() {
+        System.out.println();
         ArrayList creds_arr;
         try {
             creds_arr = j_read.read("creds.json");
@@ -74,10 +82,31 @@ public class USER {
             System.out.println("-------------------------------");
         }
     }
+    public String displayUserVault(String userfile) {
+        ArrayList creds_arr;
+        try {
+            creds_arr = j_read.read(userfile);
+        } catch(Exception e) {
+            return "File not found.";
+        }
+        String[] cur_creds;
+        String entry = "";
+
+        for(int i = 0;i < creds_arr.size();i++){
+            cur_creds = (String[]) creds_arr.get(i);
+            entry = entry + ("Entry " + (i+1) + ":" + "\n");
+            entry = entry + ("Website: " + cur_creds[0] + "\n");
+            entry = entry + ("Username: " + cur_creds[1] + "\n");
+            entry = entry + ("Password: " + cur_creds[2]) + "\n";
+            entry = entry + ("-------------------------------" + "\n");
+        }
+        return entry;
+    }
 
     public void encrypt_vault(){
         if (encrypt.encrypt(this.vault)){
             System.out.println("encryption sucessful");
+
         }else{
             System.out.println("encryption fail");
         }
@@ -86,18 +115,11 @@ public class USER {
 
     public void decrypt_vault(){
         if (encrypt.decrypt(this.vault)){
-            System.out.println("decryption sucessful");
+            System.out.println("decryption successful");
+
         }else{
             System.out.println("decryption fail");
+
         }
-
-
     }
-
-
-
-
-
-
-
 }
