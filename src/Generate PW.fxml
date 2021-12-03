@@ -15,7 +15,7 @@
     <children>
         <BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fffef7;">
          <left>
-            <TextField maxWidth="60.0" promptText="Max 16" translateX="235.0" translateY="-62.0" BorderPane.alignment="CENTER">
+            <TextField fx:id="PasswordLength" maxWidth="60.0" promptText="Max 16" translateX="235.0" translateY="-62.0" BorderPane.alignment="CENTER">
                <font>
                   <Font name="Arial" size="12.0" />
                </font></TextField>
