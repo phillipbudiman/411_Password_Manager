@@ -153,7 +153,7 @@ public class SceneController {
 
     public void login(ActionEvent event) throws IOException{
 
-        
+        /**
         User user_ka = new User("ka411", "kaPW");
         user_ka.storeUser();
         user_ka.add_vault("google.com", "ka@gmail.com", "password123");
@@ -168,25 +168,26 @@ public class SceneController {
         user_nate.storeUser();
         user_nate.add_vault("youtube.com", "channel88", "channel89");
         user_nate.add_vault("duckduckgo.com", "userNate", "old_password");
-         
+         **/
 
         username = UsernameLogin.getText();
         masterPassword = PasswordLogin.getText();
         vaultCommand = VaultText.getText();
-        String[] vaultCommandArr = vaultCommand.split(" ");
 
         if (username.equals(user_ka.getLogin()) && masterPassword.equals(user_ka.getPassword())){
-
             user_ka.encrypt_vault();
             user_ka.decrypt_vault();
 
             if(vaultCommand.contains("/add")){
-                user_ka.add_vault(vaultCommandArr[1], vaultCommandArr[2], vaultCommandArr[3]);
-            }
-            if(vaultCommand.contains("/remove")){
-                user_ka.remove_vault(vaultCommandArr[1]);
+                String[] vaultCommandSplit_add = vaultCommand.split("/add ");
+                String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
+                user_ka.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
             }
 
+            if(vaultCommand.contains("/remove")){
+                String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
+                user_ka.remove_vault(vaultCommandSplit_remove[1]);
+            }
             vaultString = user_ka.displayUserVault("creds.json");
             VaultText.setText(vaultString);
 
@@ -196,12 +197,15 @@ public class SceneController {
             user_phil.decrypt_vault();
 
             if(vaultCommand.contains("/add")){
-                user_phil.add_vault(vaultCommandArr[1], vaultCommandArr[2], vaultCommandArr[3]);
+                String[] vaultCommandSplit_add = vaultCommand.split("/add ");
+                String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
+                user_phil.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
             }
+
             if(vaultCommand.contains("/remove")){
-                user_phil.remove_vault(vaultCommandArr[1]);
+                String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
+                user_phil.remove_vault(vaultCommandSplit_remove[1]);
             }
-            
             vaultString = user_phil.displayUserVault("creds2.json");
             VaultText.setText(vaultString);
 
@@ -211,12 +215,15 @@ public class SceneController {
             user_nate.decrypt_vault();
 
             if(vaultCommand.contains("/add")){
-                user_nate.add_vault(vaultCommandArr[1], vaultCommandArr[2], vaultCommandArr[3]);
+                String[] vaultCommandSplit_add = vaultCommand.split("/add ");
+                String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
+                user_nate.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
             }
+
             if(vaultCommand.contains("/remove")){
-                user_nate.remove_vault(vaultCommandArr[1]);
+                String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
+                user_nate.remove_vault(vaultCommandSplit_remove[1]);
             }
-            
             vaultString = user_nate.displayUserVault("creds3.json");
             VaultText.setText(vaultString);
 
