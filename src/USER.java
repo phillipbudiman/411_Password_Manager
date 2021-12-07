@@ -57,6 +57,16 @@ public class User {
             System.out.println("File not found");
         }
     }
+    
+    public void remove_vault(String website){
+        j_write.remove(website);
+        try {
+            j_write.export(this.getFileString());
+        }catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+    }
+    
     public boolean updateMasterPassword(String new_password){
         this.master_password = new_password;
         return encrypt.updatePassword(new_password);
