@@ -1,3 +1,5 @@
+package sample;
+
 import org.json.simple.JSONObject;
 
 import javax.crypto.spec.IvParameterSpec;
@@ -32,6 +34,21 @@ public class User {
     public User(){
         this.j_write = new JSON_Writer();
         this.j_read = new JSON_Reader();
+    }
+
+
+    public boolean checkUserExists() {
+        if(this.login.equals(j_read.readMaster("master_creds.json"))){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkMasterEmpty() {
+        if(j_read.readMaster("master_creds.json").equals("null")) {
+            return true;
+        }
+        return false;
     }
 
     //store login and master password into a file

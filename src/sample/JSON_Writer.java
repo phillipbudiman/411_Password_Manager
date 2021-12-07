@@ -1,4 +1,4 @@
-// Java program for write JSON to a file
+package sample;// Java program for write JSON to a file
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

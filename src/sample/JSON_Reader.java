@@ -1,3 +1,5 @@
+package sample;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,7 +26,7 @@ public class JSON_Reader {
             obj = new JSONParser().parse(new FileReader(fileName));
         } catch (ParseException | IOException e) {
             System.out.println(e);
-            return null;
+            return "noexist";
         }
 
         JSONObject jso = (JSONObject) obj;
@@ -102,17 +104,21 @@ public class JSON_Reader {
         // 'creds.json' if it's in the root path of the repository
         ArrayList ar = jr.read("creds.json");
 
-        // For loop that iterates based on the number of items in the arrayList
-        for(int i = 0;i < ar.size();i++){
-            // For loop that iterates 3 times--one for each index in the array for each ArrayList index
-            for(int o = 0;o < 3;o++) {
+        String mastr = jr.readMaster("master_creds.json");
 
-                // Casts output of ar.get() to String[] from Object[] such that we can make the code more
-                // compact and use the [o] operator to access the array indices.
-                System.out.println(((String[]) ar.get(i))[o]);
-            }
-            // Newline
-            System.out.println();
-        }
+        System.out.println(mastr);
+//
+//        // For loop that iterates based on the number of items in the arrayList
+//        for(int i = 0;i < ar.size();i++){
+//            // For loop that iterates 3 times--one for each index in the array for each ArrayList index
+//            for(int o = 0;o < 3;o++) {
+//
+//                // Casts output of ar.get() to String[] from Object[] such that we can make the code more
+//                // compact and use the [o] operator to access the array indices.
+//                System.out.println(((String[]) ar.get(i))[o]);
+//            }
+//            // Newline
+//            System.out.println();
+//        }
     }
 }
