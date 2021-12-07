@@ -1,3 +1,5 @@
+package sample;
+
 import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,6 +41,7 @@ public class SceneController {
     @FXML
     TextField PasswordLength;
 
+    // Helper method for the password generate method
     public String passwordGenerator(int len, boolean number, boolean upper, boolean special){
         Random rand = new Random();
 
@@ -146,10 +149,7 @@ public class SceneController {
 
 
     //Create user login-database
-    User user_ka = new User("ka411", "kaPW");
-    User user_phil = new User("phil411", "philPW");
-    User user_nate = new User("nate411", "natePW");
-
+    User user = new User("ka411", "kaPW");
 
     public void login(ActionEvent event) throws IOException{
 
@@ -174,24 +174,25 @@ public class SceneController {
         masterPassword = PasswordLogin.getText();
         vaultCommand = VaultText.getText();
 
-        if (username.equals(user_ka.getLogin()) && masterPassword.equals(user_ka.getPassword())){
-            user_ka.encrypt_vault();
-            user_ka.decrypt_vault();
+        if (username.equals(user.getLogin()) && masterPassword.equals(user.getPassword())){
+            user.encrypt_vault();
+            user.decrypt_vault();
 
             if(vaultCommand.contains("/add")){
                 String[] vaultCommandSplit_add = vaultCommand.split("/add ");
                 String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
-                user_ka.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
+                user.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
             }
 
             if(vaultCommand.contains("/remove")){
                 String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
-                user_ka.remove_vault(vaultCommandSplit_remove[1]);
+                user.remove_vault(vaultCommandSplit_remove[1]);
             }
-            vaultString = user_ka.displayUserVault("creds.json");
+            vaultString = user.displayUserVault("creds.json");
             VaultText.setText(vaultString);
 
         }
+        /**
         else if (username.equals(user_phil.getLogin()) && masterPassword.equals(user_phil.getPassword())){
             user_phil.encrypt_vault();
             user_phil.decrypt_vault();
@@ -206,7 +207,7 @@ public class SceneController {
                 String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
                 user_phil.remove_vault(vaultCommandSplit_remove[1]);
             }
-            vaultString = user_phil.displayUserVault("creds2.json");
+            vaultString = user_phil.displayUserVault("creds.json");
             VaultText.setText(vaultString);
 
         }
@@ -224,12 +225,13 @@ public class SceneController {
                 String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
                 user_nate.remove_vault(vaultCommandSplit_remove[1]);
             }
-            vaultString = user_nate.displayUserVault("creds3.json");
+            vaultString = user_nate.displayUserVault("creds.json");
             VaultText.setText(vaultString);
 
         }
+         **/
         else{
-            if (username.equals(user_ka.getLogin()) || username.equals(user_nate.getLogin()) || username.equals(user_phil.getLogin())) {
+            if (username.equals(user.getLogin()) || username.equals(user.getLogin()) || username.equals(user.getLogin())) {
                 VaultText.setText("Incorrect login for " + username + ".");
             }
             else{
