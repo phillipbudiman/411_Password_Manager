@@ -147,96 +147,63 @@ public class SceneController {
     String vaultString;
     String vaultCommand;
 
-
     //Create user login-database
-    User user = new User("ka411", "kaPW");
-
+    //Add done button - encrypt and exit
     public void login(ActionEvent event) throws IOException{
-
-        /**
-        User user_ka = new User("ka411", "kaPW");
-        user_ka.storeUser();
-        user_ka.add_vault("google.com", "ka@gmail.com", "password123");
-        user_ka.add_vault("yahoo.com", "ka@yahoo.com", "new_password");
-
-        User user_phil = new User("phil411", "philPW");
-        user_phil.storeUser();
-        user_phil.add_vault("github.com", "newuser42", "fj8Hs0iTs");
-        user_phil.add_vault("facebook.com", "zuckfan", "bad_password");
-
-        User user_nate = new User("nate411", "natePW");
-        user_nate.storeUser();
-        user_nate.add_vault("youtube.com", "channel88", "channel89");
-        user_nate.add_vault("duckduckgo.com", "userNate", "old_password");
-         **/
 
         username = UsernameLogin.getText();
         masterPassword = PasswordLogin.getText();
         vaultCommand = VaultText.getText();
 
-        if (username.equals(user.getLogin()) && masterPassword.equals(user.getPassword())){
-            user.encrypt_vault();
-            user.decrypt_vault();
+        User user = new User(username, masterPassword);
+        user.encrypt_vault();
 
-            if(vaultCommand.contains("/add")){
-                String[] vaultCommandSplit_add = vaultCommand.split("/add ");
-                String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
-                user.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
+        if (user.checkUserExists() && (user.checkMasterEmpty() == false)){
+
+            if(user.decrypt_vault().contains("success")) {
+                if (vaultCommand.contains("/add")) {
+                    String[] vaultCommandSplit_add = vaultCommand.split("/add ");
+                    String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
+                    user.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
+                }
+                if (vaultCommand.contains("/remove")) {
+                    String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
+                    user.remove_vault(vaultCommandSplit_remove[1]);
+                }
+                if (vaultCommand.contains("/done")) {
+                    user.encrypt_vault();
+                    System.exit(0);
+                }
             }
-
-            if(vaultCommand.contains("/remove")){
-                String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
-                user.remove_vault(vaultCommandSplit_remove[1]);
+            else{
+                VaultText.setText("Incorrect password.");
             }
             vaultString = user.displayUserVault("creds.json");
             VaultText.setText(vaultString);
-
         }
-        /**
-        else if (username.equals(user_phil.getLogin()) && masterPassword.equals(user_phil.getPassword())){
-            user_phil.encrypt_vault();
-            user_phil.decrypt_vault();
-
-            if(vaultCommand.contains("/add")){
-                String[] vaultCommandSplit_add = vaultCommand.split("/add ");
-                String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
-                user_phil.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
-            }
-
-            if(vaultCommand.contains("/remove")){
-                String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
-                user_phil.remove_vault(vaultCommandSplit_remove[1]);
-            }
-            vaultString = user_phil.displayUserVault("creds.json");
-            VaultText.setText(vaultString);
-
-        }
-        else if (username.equals(user_nate.getLogin()) && masterPassword.equals(user_nate.getPassword())){
-            user_nate.encrypt_vault();
-            user_nate.decrypt_vault();
-
-            if(vaultCommand.contains("/add")){
-                String[] vaultCommandSplit_add = vaultCommand.split("/add ");
-                String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
-                user_nate.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
-            }
-
-            if(vaultCommand.contains("/remove")){
-                String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
-                user_nate.remove_vault(vaultCommandSplit_remove[1]);
-            }
-            vaultString = user_nate.displayUserVault("creds.json");
-            VaultText.setText(vaultString);
-
-        }
-         **/
-        else{
-            if (username.equals(user.getLogin()) || username.equals(user.getLogin()) || username.equals(user.getLogin())) {
-                VaultText.setText("Incorrect login for " + username + ".");
+        else if (user.checkUserExists() == false){
+            
+            user.storeUser();
+            if(user.decrypt_vault().contains("success")) {
+                if (vaultCommand.contains("/add")) {
+                    String[] vaultCommandSplit_add = vaultCommand.split("/add ");
+                    String[] vaultCommandArr_add = vaultCommandSplit_add[1].split(" ");
+                    user.add_vault(vaultCommandArr_add[0], vaultCommandArr_add[1], vaultCommandArr_add[2]);
+                }
+                if (vaultCommand.contains("/remove")) {
+                    String[] vaultCommandSplit_remove = vaultCommand.split("/remove ");
+                    user.remove_vault(vaultCommandSplit_remove[1]);
+                }
+                if (vaultCommand.contains("/done")) {
+                    user.encrypt_vault();
+                    System.exit(0);
+                }
             }
             else{
-                VaultText.setText("User does not exist.");
+                VaultText.setText("Incorrect password.");
             }
+            vaultString = user.displayUserVault("creds.json");
+            VaultText.setText(vaultString);
         }
     }
 
