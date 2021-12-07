@@ -91,6 +91,32 @@ public class JSON_Reader {
         }
     }
 
+    public JSONArray getJSONArray(String fileName) {
+        // Initialize ArrayList to hold exported JSON credentials
+        credential_arrList = new ArrayList();
+
+        // Initializes JSONParser and parses JSON data from fileName
+        // into variable of type Object if no ParseException or IOException
+        // is thrown. Otherwise, sets obj to null.
+        Object obj;
+        try {
+            obj = new JSONParser().parse(new FileReader(fileName));
+        } catch (ParseException | IOException e) {
+            System.out.println(e);
+            obj = null;
+        }
+
+        // Converts obj to type JSONObject at variable jso if obj is not null
+        if (obj != null) {
+            JSONObject jso = (JSONObject) obj;
+
+            // Obtains JSONArray located at field "credentials" of JSON
+            JSONArray jsonArray = ((JSONArray) jso.get("credentials"));
+            return jsonArray;
+        }
+        return null;
+    }
+
     public static void main(String[] args) throws Exception{
         // Creates JSON_Reader object
         JSON_Reader jr = new JSON_Reader();
