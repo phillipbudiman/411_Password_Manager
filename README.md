@@ -63,18 +63,18 @@ These two method below are for debugging purposes, you probably don't need to us
 There are 4 methods that focus on switching scenes. The methods are triggered by pressing the return button avalible on each scene. 
 
    3. **switchToHelpscreen(ActionEvent event)**
-    - returns void
-    - Switches the scene to the Helpscreen.
-    - 
+   - returns void
+   - Switches the scene to the Helpscreen.
+   
    4. **switchToTitlescreen(ActionEvent event)**
-    - returns void
-    - Switches the scene to the TitleScreen.
+   - returns void
+   - Switches the scene to the TitleScreen.
    
    5. **switchToLoginScreen(ActionEvent event)**
    - returns void
    - Switches the scene to the LoginScreen.
    
    6. **switchToGeneratePW(ActionEvent event)**
-    - returns void
-    - Switches the scene to the Generate Password Screen.
+   - returns void
+   - Switches the scene to the Generate Password Screen.
    
