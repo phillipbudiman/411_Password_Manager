@@ -18,7 +18,7 @@ public class User {
         this.login = login;
         this.master_password = password;
         this.encrypt = new AES_file_encryption(login,password);
-        this.j_write = new JSON_Writer();
+        this.j_write = new JSON_Writer("creds.json");
         this.j_read = new JSON_Reader();
         this.vault = new File("creds.json");
 
@@ -30,12 +30,17 @@ public class User {
     public String getPassword(){
         return master_password;
     }
+    public void setLogin(String new_login){
+        login = new_login;
+    }
+    public void setPassword(String new_password){
+        master_password = new_password;
+    }
 
     public User(){
         this.j_write = new JSON_Writer();
         this.j_read = new JSON_Reader();
     }
-
 
     public boolean checkUserExists() {
         if(this.login.equals(j_read.readMaster("master_creds.json"))){
@@ -45,7 +50,7 @@ public class User {
     }
 
     public boolean checkMasterEmpty() {
-        if(j_read.readMaster("master_creds.json").equals("null")) {
+        if(j_read.readMaster("master_creds.json").equals("noexist")) {
             return true;
         }
         return false;
@@ -74,7 +79,7 @@ public class User {
             System.out.println("File not found");
         }
     }
-    
+
     public void remove_vault(String website){
         j_write.remove(website);
         try {
@@ -83,7 +88,7 @@ public class User {
             System.out.println("File not found");
         }
     }
-    
+
     public boolean updateMasterPassword(String new_password){
         this.master_password = new_password;
         return encrypt.updatePassword(new_password);
@@ -118,8 +123,14 @@ public class User {
         }
         String[] cur_creds;
         String entry = "";
-
-        for(int i = 0;i < creds_arr.size();i++){
+        int cred_size = 0;
+        if (creds_arr == null){
+            cred_size = 0;
+            return "VAULT IS EMPTY";
+        }else{
+            cred_size = creds_arr.size();
+        }
+        for(int i = 0;i < cred_size;i++){
             cur_creds = (String[]) creds_arr.get(i);
             entry = entry + ("Entry " + (i+1) + ":" + "\n");
             entry = entry + ("Website: " + cur_creds[0] + "\n");
@@ -130,23 +141,20 @@ public class User {
         return entry;
     }
 
-    public void encrypt_vault(){
+    public String encrypt_vault(){
         if (encrypt.encrypt(this.vault)){
-            System.out.println("encryption sucessful");
-
+            return "encryption successful";
         }else{
-            System.out.println("encryption fail");
+            return "encryption fail";
         }
     }
     //perform password checking on the frontend side
 
-    public void decrypt_vault(){
+    public String decrypt_vault(){
         if (encrypt.decrypt(this.vault)){
-            System.out.println("decryption successful");
-
+            return "decryption successful";
         }else{
-            System.out.println("decryption fail");
-
+            return "decryption fail";
         }
     }
 }
