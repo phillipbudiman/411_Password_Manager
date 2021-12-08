@@ -45,4 +45,36 @@ These two method below are for debugging purposes, you probably don't need to us
  
  **Example of how to use AES_file_encryption class with JSON_Reader & JSON_Writer is in main/src/AES_test**
 
+ **CLASS SceneController**
+ Attributes: 
+ private Stage stage;
+ private Scene scene;
+ private Parent root;
  
+ The controller class is driven by 3 main actions across 6 methods.
+ 1. **displayPassword(ActionEvent event)**
+   - return void
+   - Driven by the helper method, passwordGenerator, this method uses the boolean from the checkboxes number, upper, special, and the string from PasswordLength. When this method is called, by the pressing the passwordButton, it will generate a password following the given parameters.
+  
+  2. **login(ActionEvent event)**
+   - returns void
+   - The login method uses the two textfields, PasswordLogin and UsernameLogin, to create a user. The user is then compared to the master-cred.json data to determine if there is already a vault in place for this user or a new one needs to be made. 
+
+There are 4 methods that focus on switching scenes. The methods are triggered by pressing the return button avalible on each scene. 
+
+   3. **switchToHelpscreen(ActionEvent event)**
+   - returns void
+   - Switches the scene to the Helpscreen.
+   
+   4. **switchToTitlescreen(ActionEvent event)**
+   - returns void
+   - Switches the scene to the TitleScreen.
+   
+   5. **switchToLoginScreen(ActionEvent event)**
+   - returns void
+   - Switches the scene to the LoginScreen.
+   
+   6. **switchToGeneratePW(ActionEvent event)**
+   - returns void
+   - Switches the scene to the Generate Password Screen.
+   
