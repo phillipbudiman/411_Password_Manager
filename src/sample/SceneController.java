@@ -158,7 +158,9 @@ public class SceneController {
         User user = new User(username, masterPassword);
         System.out.println(user.login + " " + user.master_password);
         System.out.println(user.checkUserExists() + " " + user.checkMasterEmpty());
-        user.encrypt_vault();
+        if (user.isEncrypted() == false) {
+            user.encrypt_vault();
+        }
 
         if (user.checkUserExists() && (user.checkMasterEmpty() == false)){
             String str = user.decrypt_vault();

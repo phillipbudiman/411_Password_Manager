@@ -142,6 +142,16 @@ public class User {
         return entry;
     }
 
+    public boolean isEncrypted() {
+        ArrayList ar;
+        try {
+            ar = j_read.read("creds.json");
+        } catch (Exception e) {
+            return true;
+        }
+        return false;
+    }
+
     public String encrypt_vault(){
         if (encrypt.encrypt(this.vault)){
             return "encryption successful";
