@@ -1,3 +1,6 @@
+import sample.JSON_Reader;
+import sample.User;
+
 import javax.crypto.spec.IvParameterSpec;
 import javax.xml.crypto.Data;
 import java.io.DataInputStream;
@@ -19,8 +22,8 @@ public class AEStest {
 		is initialise */
 
 
-		USER user = new USER("ka", "password123");
-		user.storeUser();
+		User user = new User("user", "pass");
+		JSON_Reader jr = new JSON_Reader();
 
 		//for (int i =0;i <=3;i++) {
 		//	user.add_vault("google.com", "username1", "password1");
@@ -28,9 +31,12 @@ public class AEStest {
 
 		//user.encrypt_vault();
 
+//		user.decrypt_vault();
+
 		user.decrypt_vault();
 
-
+		System.out.println(user.displayUserVault("creds.json"));
+		System.out.println(jr.read("creds.json"));
 
 	}
 

@@ -50,7 +50,8 @@ public class User {
     }
 
     public boolean checkMasterEmpty() {
-        if(j_read.readMaster("master_creds.json").equals("noexist")) {
+        String master_read = j_read.readMaster("master_creds.json");
+        if(master_read.equals("null") || master_read.equals("")) {
             return true;
         }
         return false;

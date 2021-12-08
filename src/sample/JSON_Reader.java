@@ -26,7 +26,7 @@ public class JSON_Reader {
             obj = new JSONParser().parse(new FileReader(fileName));
         } catch (ParseException | IOException e) {
             System.out.println(e);
-            return "noexist";
+            return "null";
         }
 
         JSONObject jso = (JSONObject) obj;
@@ -43,12 +43,14 @@ public class JSON_Reader {
         // into variable of type Object if no ParseException or IOException
         // is thrown. Otherwise, sets obj to null.
         Object obj;
-        try {
-            obj = new JSONParser().parse(new FileReader(fileName));
-        } catch (ParseException | IOException e) {
-            System.out.println(e);
-            obj = null;
-        }
+//        try {
+//            obj = new JSONParser().parse(new FileReader(fileName));
+//        } catch (ParseException | IOException e) {
+//            System.out.println("wsz" + e);
+//            obj = null;
+//        }
+
+        obj = new JSONParser().parse(new FileReader(fileName));
 
         // Converts obj to type JSONObject at variable jso if obj is not null
         if (obj != null) {
