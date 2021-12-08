@@ -161,8 +161,8 @@ public class SceneController {
         user.encrypt_vault();
 
         if (user.checkUserExists() && (user.checkMasterEmpty() == false)){
-
-            if(user.decrypt_vault().contains("success")) {
+            String str = user.decrypt_vault();
+            if(str.contains("success")) {
                 System.out.println("decrypted!");
                 if (vaultCommand.contains("/add")) {
                     String[] vaultCommandSplit_add = vaultCommand.split("/add ");
@@ -177,13 +177,13 @@ public class SceneController {
                     user.encrypt_vault();
                     System.exit(0);
                 }
+                user.decrypt_vault();
+                vaultString = user.displayUserVault("creds.json");
+                VaultText.setText(vaultString);
             }
             else{
                 VaultText.setText("Incorrect password.");
             }
-            user.decrypt_vault();
-            vaultString = user.displayUserVault("creds.json");
-            VaultText.setText(vaultString);
         }
         else if (user.checkUserExists() == false && user.checkMasterEmpty()==true){
             user.storeUser();

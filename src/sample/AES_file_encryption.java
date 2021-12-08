@@ -194,16 +194,16 @@ public class AES_file_encryption {
 
 	//IMPORTANT method that calls the decryption of the file and catches any exception returns
 	public boolean decrypt(File input_file){
+		boolean failed = false;
 		try{
 			decrypt_file(input_file,this.key,this.iv);
-			return true;
 		} catch (InvalidAlgorithmParameterException|NoSuchPaddingException |IllegalBlockSizeException|
-				NoSuchAlgorithmException|IOException|InvalidKeyException e) {
-			return false;
-		} catch (BadPaddingException e) {
-			System.out.println("bad key use");
-			return false;
+				NoSuchAlgorithmException|IOException|InvalidKeyException | BadPaddingException e) {
+			failed = true;
+			System.out.println("exception: " + e);
 		}
+		System.out.println("decrypt failed: " + failed);
+		return !failed;
 	}
 	//a method for encrypting a file
 	private static void encrypt_file(File input_file, SecretKey skey, IvParameterSpec iv)
